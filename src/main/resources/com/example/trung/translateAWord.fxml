@@ -54,7 +54,7 @@
    <center>
       <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
-            <Label fx:id="english" alignment="CENTER" layoutX="2.0" layoutY="34.0" prefHeight="164.0" prefWidth="600.0" textAlignment="CENTER" wrapText="true">
+            <Label fx:id="english" alignment="CENTER" layoutX="2.0" layoutY="34.0" prefHeight="122.0" prefWidth="600.0" textAlignment="CENTER" wrapText="true">
                <font>
                   <Font name="System Italic" size="18.0" />
                </font>
@@ -65,11 +65,11 @@
                   <Image url="@../../../images/back.png" />
                </image>
             </ImageView>
-            <Label fx:id="vietnam" alignment="CENTER" layoutX="2.0" layoutY="196.0" prefHeight="355.0" prefWidth="600.0" wrapText="true">
+            <Label fx:id="vietnam" alignment="CENTER" layoutX="2.0" layoutY="163.0" prefHeight="373.0" prefWidth="600.0" wrapText="true">
                <font>
                   <Font name="System Italic" size="18.0" />
                </font></Label>
-            <Line endX="293.800048828125" layoutX="309.0" layoutY="197.0" startX="-309.0" />
+            <Line endX="293.800048828125" layoutX="309.0" layoutY="163.0" startX="-309.0" />
          </children>
       </AnchorPane>
    </center>

@@ -30,7 +30,13 @@ public class home {
     private Button btnDichDoanVan;
     @FXML
     private Button search;
+    @FXML
+    private Button btnAdd;
 
+    @FXML
+    void addAWord(ActionEvent event) throws IOException {
+        HelloApplication.setRoot("AddAWord");
+    }
     @FXML
     void dichDoanVan(ActionEvent event) throws IOException {
         HelloApplication.setRoot("dichDoanVan");
@@ -39,15 +45,19 @@ public class home {
     @FXML
     void searchAWord(ActionEvent event) throws IOException {
         String abc = wordLookup.getText();
-        res = DictionaryManagement.lookupWord(abc) ;
-        HelloApplication.setRoot("translateAWord");
+        if(abc.length() > 0) {
+            res = DictionaryManagement.lookupWord(abc);
+            HelloApplication.setRoot("translateAWord");
+        }
     }
     @FXML
     void searchAWordByEnter(KeyEvent event) throws IOException {
         if(event.getCode() == KeyCode.ENTER) {
             String abc = wordLookup.getText();
-            res = DictionaryManagement.lookupWord(abc);
-            HelloApplication.setRoot("translateAWord");
+            if(abc.length() > 0) {
+                res = DictionaryManagement.lookupWord(abc);
+                HelloApplication.setRoot("translateAWord");
+            }
         }
     }
     @FXML

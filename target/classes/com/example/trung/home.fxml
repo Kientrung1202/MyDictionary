@@ -51,7 +51,17 @@
    <center>
       <AnchorPane prefHeight="245.0" prefWidth="600.0" BorderPane.alignment="CENTER">
          <children>
-            <Button fx:id="btnDichDoanVan" layoutX="58.0" layoutY="60.0" mnemonicParsing="false" onAction="#dichDoanVan" prefHeight="26.0" prefWidth="284.0" style="-fx-background-radius: 10px; -fx-background-color: #1de2ad;" text="Dịch đoạn văn " wrapText="true" AnchorPane.bottomAnchor="466.0" AnchorPane.leftAnchor="58.0" AnchorPane.rightAnchor="58.0" AnchorPane.topAnchor="60.0">
+            <Button fx:id="btnDichDoanVan" layoutX="58.0" layoutY="102.0" mnemonicParsing="false" onAction="#dichDoanVan" prefHeight="26.0" prefWidth="284.0" style="-fx-background-radius: 10px; -fx-background-color: #1de2ad;" text="Dịch đoạn văn " wrapText="true" AnchorPane.bottomAnchor="424.0" AnchorPane.leftAnchor="58.0" AnchorPane.rightAnchor="58.0" AnchorPane.topAnchor="102.0">
+               <font>
+                  <Font size="22.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnAdd" layoutX="58.0" layoutY="177.0" mnemonicParsing="false" onAction="#addAWord" style="-fx-background-color: #1de2ad; -fx-background-radius: 10px;" text="Thêm từ" AnchorPane.bottomAnchor="349.0" AnchorPane.leftAnchor="58.0" AnchorPane.rightAnchor="58.0" AnchorPane.topAnchor="177.0">
+               <font>
+                  <Font size="22.0" />
+               </font>
+            </Button>
+            <Button layoutX="58.0" layoutY="252.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="52.0" text="Note" AnchorPane.bottomAnchor="274.0" AnchorPane.leftAnchor="58.0" AnchorPane.rightAnchor="58.0" AnchorPane.topAnchor="252.0">
                <font>
                   <Font size="22.0" />
                </font>

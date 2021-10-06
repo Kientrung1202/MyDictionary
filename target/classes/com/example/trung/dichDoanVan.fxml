@@ -126,7 +126,7 @@
       <AnchorPane prefHeight="552.0" prefWidth="66.0" BorderPane.alignment="CENTER">
          <children>
             <Button layoutX="7.0" layoutY="15.0" mnemonicParsing="false" prefHeight="48.0" prefWidth="52.0" text="Button" />
-            <ImageView fx:id="btnback" fitHeight="49.0" fitWidth="58.0" layoutX="8.0" layoutY="14.0" onMouseClicked="#back" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="btnback" fitHeight="50.0" fitWidth="58.0" layoutX="8.0" layoutY="14.0" onMouseClicked="#back" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../../images/back.png" />
                </image>
