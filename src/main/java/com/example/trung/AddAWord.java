@@ -40,17 +40,27 @@ public class AddAWord {
         String vietnamText = vietnam.getText();
         Word newWord = new Word(englishText, "", vietnamText);
         boolean ok = DictionaryManagement.addAWord(newWord);
-        if (ok) {
-            //hien asert ok
+        if(ok) {
             english.setText("");
             vietnam.setText("");
-            resultOfAdd.setResult(true);
             Stage newStage = HelloApplication.addAScene("resultOfAdd");
             newStage.show();
         } else {
-            //hien asert khong ok
-            resultOfAdd.setResult(false);
+            Stage newStage = HelloApplication.addAScene("resultWrongOfAdd");
+            newStage.show();
         }
+//        if (ok) {
+//            //hien asert ok
+//            c
+//            resultOfAdd.setResult(true);
+//            Stage newStage = HelloApplication.addAScene("resultOfAdd");
+//            newStage.show();
+//        } else {
+//            //hien asert khong ok
+//            resultOfAdd.setResult(false);
+//            Stage newStage = HelloApplication.addAScene("resultOfAdd");
+//            newStage.show();
+//        }
     }
 
     @FXML

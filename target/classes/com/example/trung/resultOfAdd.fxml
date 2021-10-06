@@ -9,8 +9,7 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-
-<DialogPane prefHeight="306.0" prefWidth="360.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.trung.resultOfAdd">
+<DialogPane prefHeight="262.0" prefWidth="361.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.trung.resultOfAdd">
    <header>
       <AnchorPane prefHeight="93.0" prefWidth="378.0">
          <children>
@@ -23,15 +22,15 @@
       </AnchorPane>
    </header>
    <content>
-      <AnchorPane prefHeight="56.0" prefWidth="360.0">
+      <AnchorPane prefHeight="171.0" prefWidth="361.0">
          <children>
-            <Button fx:id="close" layoutX="283.0" layoutY="145.0" mnemonicParsing="false" onAction="#closeStage" text="close" />
-            <Label fx:id="res" alignment="CENTER" layoutX="14.0" layoutY="42.0" prefHeight="32.0" prefWidth="229.0" text="Thêm thành công" textFill="#2ac166">
+            <Button fx:id="close" layoutX="283.0" layoutY="120.0" mnemonicParsing="false" onAction="#closeStage" prefHeight="27.0" prefWidth="50.0" text="close" />
+            <Label alignment="CENTER" layoutX="14.0" layoutY="42.0" prefHeight="32.0" prefWidth="229.0" text="Thêm thành công" textFill="#2ac166">
                <font>
                   <Font name="System Bold" size="22.0" />
                </font>
             </Label>
-            <ImageView fx:id="icon" fitHeight="48.0" fitWidth="52.0" layoutX="279.0" layoutY="36.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="48.0" fitWidth="52.0" layoutX="279.0" layoutY="36.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../../images/ok.png" />
                </image>

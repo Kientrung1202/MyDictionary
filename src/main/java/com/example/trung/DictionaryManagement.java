@@ -22,9 +22,11 @@ public class DictionaryManagement {
                     // check nếu mà từ nó có phần pronun thì độ dài của phần đứng trước "/" lớn hơn từ cần tìm 2 chữ.
                     if (line.length() - englishText.length() >= 2 ) {
                         String[] firstLine = line.split("/");
-                        if(firstLine[0].length() - englishText.length() > 2) {
+                        // check xem cos phai tu do khong, vi co the chu cai dau giong nhau
+                        int size = firstLine.length;
+                        if( size != 0 && firstLine[0].length() - englishText.length() > 2) {
                             check = false;
-                        }
+                        } else if(size == 1) check = false ;
                     }
                     // compare to englishText
                     if(check) {
@@ -69,11 +71,12 @@ public class DictionaryManagement {
         File file = new File(path);
         FileWriter fileWriter = new FileWriter(file.getAbsoluteFile(), true);
         BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
-            if(input.getVietnamText()!= "" && input.getEnglishText() != "") {
+        boolean exis = !lookupWord(input.getEnglishText()).getVietnamText().equals("Khong co tu nay trong tu dien");
+        ;
+            if( !exis && !input.getVietnamText().equals("") && !input.getEnglishText().equals("")) {
                 bufferedWriter.write("@" + input.getEnglishText() + "\n" + input.getVietnamText()+"\n");
                 bufferedWriter.close();
                 fileWriter.close();
-                System.out.println("oke");
                 return true;
             }
             else {
