@@ -67,8 +67,7 @@
             <Font size="22.0" />
          </font></TextField>
       <Button fx:id="add" layoutX="263.0" layoutY="533.0" mnemonicParsing="false" onAction="#addAWord" prefHeight="39.0" prefWidth="64.0" text="Submit" AnchorPane.leftAnchor="263.0" AnchorPane.rightAnchor="263.0" />
-      <Label layoutX="45.0" layoutY="124.0" prefHeight="50.0" prefWidth="58.0" text="afsdg" />
-      <ImageView fx:id="back" fitHeight="50.0" fitWidth="58.0" layoutX="45.0" layoutY="124.0" onMouseClicked="#back" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="back" fitHeight="40.0" fitWidth="40.0" layoutX="54.0" layoutY="126.0" onMouseClicked="#back" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../images/back.png" />
          </image>

@@ -15,6 +15,7 @@ public class HelloApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         scene = new Scene(loadFxml("home"));
+        stage.setResizable(false);
         stage.setTitle("Dictionary");
         stage.setScene(scene);
         stage.show();
