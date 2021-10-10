@@ -61,7 +61,7 @@
                   <Font size="22.0" />
                </font>
             </Button>
-            <Button layoutX="58.0" layoutY="252.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="52.0" text="Note" AnchorPane.bottomAnchor="274.0" AnchorPane.leftAnchor="58.0" AnchorPane.rightAnchor="58.0" AnchorPane.topAnchor="252.0">
+            <Button fx:id="lookedUp" layoutX="58.0" layoutY="252.0" mnemonicParsing="false" onAction="#wordLookedUp" prefHeight="30.0" prefWidth="52.0" style="-fx-background-color: #1de2ad; -fx-background-radius: 10px;" text="Từ đã tìm" AnchorPane.bottomAnchor="274.0" AnchorPane.leftAnchor="58.0" AnchorPane.rightAnchor="58.0" AnchorPane.topAnchor="252.0">
                <font>
                   <Font size="22.0" />
                </font>

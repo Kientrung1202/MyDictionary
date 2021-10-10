@@ -32,6 +32,8 @@ public class home {
     private Button search;
     @FXML
     private Button btnAdd;
+    @FXML
+    private Button lookedUp;
 
     @FXML
     void addAWord(ActionEvent event) throws IOException {
@@ -47,6 +49,10 @@ public class home {
         String abc = wordLookup.getText();
         if(abc.length() > 0) {
             res = DictionaryManagement.lookupWord(abc);
+            // tuc la neu ton tai trong tu dien thi them vao phan tu da tim
+            if (!res.getVietnamText().equals("Khong co tu nay trong tu dien")){
+                wordLookedUp.addIntoList(res);
+            }
             HelloApplication.setRoot("translateAWord");
         }
     }
@@ -56,9 +62,17 @@ public class home {
             String abc = wordLookup.getText();
             if(abc.length() > 0) {
                 res = DictionaryManagement.lookupWord(abc);
+                // tuc la ton tai trong tu dien thi them vao phan tu da tim
+                if (!res.getVietnamText().equals("Khong co tu nay trong tu dien")) {
+                    wordLookedUp.addIntoList(res);
+                }
                 HelloApplication.setRoot("translateAWord");
             }
         }
+    }
+    @FXML
+    void wordLookedUp(ActionEvent event) throws  IOException {
+        HelloApplication.setRoot("wordLookedUp");
     }
     @FXML
     void initialize() {

@@ -48,12 +48,17 @@ public class DictionaryManagement {
                         res.setPronunciation("");
                     }
                     String vietnamText = "";
+                    String type = "";
                     line = bufferedReader.readLine();
                     while ( line != null && line.length() != 0 && line.charAt(0) != '@') {// ban đầu dùng line.charAt(0) != '@' sai do có dòng trống
                         vietnamText += line + '\n';
+                        if (line.charAt(0) == '*') {
+                            type += line + '\n';
+                        }
                         line = bufferedReader.readLine();
                     }
                     res.setVietnamText(vietnamText);
+                    res.setType(type);
                     return res;
                 } else {
                     check = true;

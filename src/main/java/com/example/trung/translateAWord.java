@@ -40,6 +40,9 @@ public class translateAWord {
     void seachAWord(ActionEvent event) throws IOException {
         String word = input.getText();
         Word result = DictionaryManagement.lookupWord(word);
+        if (!result.getVietnamText().equals("Khong co tu nay trong tu dien")){
+            wordLookedUp.addIntoList(result);
+        }
         setVietnam(result.getVietnamText());
         setEng(result.getEnglishText()+"\n"+result.getPronunciation());
     }
@@ -49,6 +52,9 @@ public class translateAWord {
         if(event.getCode() == KeyCode.ENTER) {
             String word = input.getText();
             Word result = DictionaryManagement.lookupWord(word);
+            if (!result.getVietnamText().equals("Khong co tu nay trong tu dien")){
+                wordLookedUp.addIntoList(result);
+            } 
             setVietnam(result.getVietnamText());
             setEng(result.getEnglishText()+"\n"+result.getPronunciation());
         }
