@@ -41,35 +41,34 @@ public class AddAWord {
         Word newWord = new Word(englishText, "", vietnamText);
         boolean ok = DictionaryManagement.addAWord(newWord);
         if(ok) {
-            english.setText("");
+            english.setText(""); //reset 2 text fields
             vietnam.setText("");
-            Stage newStage = HelloApplication.addAScene("resultOfAdd");
+            Stage newStage = Dictionary.addAScene("SucceededAdditionNoticeBox");
             newStage.show();
         } else {
-            Stage newStage = HelloApplication.addAScene("resultWrongOfAdd");
+            Stage newStage = Dictionary.addAScene("FailedAdditionNoticeBox");
             newStage.show();
         }
 //        if (ok) {
 //            //hien asert ok
 //            c
-//            resultOfAdd.setResult(true);
-//            Stage newStage = HelloApplication.addAScene("resultOfAdd");
+//            SucceededAdditionNoticeBox.setResult(true);
+//            Stage newStage = Dictionary.addAScene("SucceededAdditionNoticeBox");
 //            newStage.show();
 //        } else {
 //            //hien asert khong ok
-//            resultOfAdd.setResult(false);
-//            Stage newStage = HelloApplication.addAScene("resultOfAdd");
+//            SucceededAdditionNoticeBox.setResult(false);
+//            Stage newStage = Dictionary.addAScene("SucceededAdditionNoticeBox");
 //            newStage.show();
 //        }
     }
 
     @FXML
     void back(MouseEvent event) throws IOException {
-        HelloApplication.setRoot("home");
+        Dictionary.setRoot("Home");
     }
     @FXML
     void initialize() {
-        assert add != null : "fx:id=\"add\" was not injected: check your FXML file 'home.fxml'.";
-
+        assert add != null : "fx:id=\"add\" was not injected: check your FXML file 'Home.fxml'.";
     }
 }

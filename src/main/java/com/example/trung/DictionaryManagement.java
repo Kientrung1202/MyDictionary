@@ -1,113 +1,107 @@
 package com.example.trung;
 
-import com.sun.speech.freetts.Voice;
-import com.sun.speech.freetts.VoiceManager;
-
 import java.io.*;
-
+import java.lang.String;
+import java.nio.file.FileSystems;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
+import java.util.Map;
+import java.util.LinkedHashMap;
 
 public class DictionaryManagement {
-    private static final String path = "C:\\Users\\ADMIN\\OneDrive\\Desktop\\trung\\src\\main\\resources\\data\\trung.txt";
+    private static final String path = "src/main/resources/data/raw dictionary(en-vi).txt";
 
-    public static Word lookupWord(String englishText) throws FileNotFoundException {
-        englishText = englishText.toLowerCase();
-        Word res = new Word();
-        res.setEnglishText(englishText);
-        try {
-            FileInputStream fileInputStream = new FileInputStream(path);
-            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(fileInputStream));
-            String line = bufferedReader.readLine();
-            boolean check = true;
-            // cấu trúc file là @từ /danhvan/, có cả @tu
-            while (line != null) {
-                // check line.length() trước bvi có dòng trống nên line.charAt == '@' là lỗi
-                if ( line.length() > englishText.length() && line.charAt(0) == '@') {
-                    // check nếu mà từ nó có phần pronun thì độ dài của phần đứng trước "/" lớn hơn từ cần tìm 2 chữ.
-                    if (line.length() - englishText.length() >= 2 ) {
-                        String[] firstLine = line.split("/");
-                        // check xem cos phai tu do khong, vi co the chu cai dau giong nhau
-                        int size = firstLine.length;
-                        if( size != 0 && firstLine[0].length() - englishText.length() > 2) {
-                            check = false;
-                        } else if(size == 1) check = false ;
-                    }
-                    // compare to englishText
-                    if(check) {
-                        for (int j = 0; j < englishText.length(); j++) {
-                            if (line.charAt(j + 1) != englishText.charAt(j)) {
-                                check = false;
-                                break;
-                            }
-                        }
-                    }
-                } else {
-                    check = false;
+    private static Map<String, Word> wordList = new LinkedHashMap<>();
+
+    public static void initialize() throws IOException {
+        wordListInitialize();
+    }
+
+    private static void wordListInitialize() throws IOException { //read file to wordList
+        BufferedReader reader = Files.newBufferedReader(FileSystems.getDefault().getPath(path));
+        String line = "";
+
+        while ((line = reader.readLine()) != null) {
+            while (line.length() > 1 && (line.charAt(0) == '@' || line.charAt(1) == '@')) {
+                String word = getWord(line);
+                String pronunciation = getPronunciation(line);
+                String meaning = "";
+
+                while ((line = reader.readLine()) != null && (line.length() > 1) && (line.charAt(0) != '@')) {
+                    meaning += line + "\n";
                 }
-                if (check) {
-                    if (line.length() > englishText.length() + 1) {
-                        String[] firstLine = line.split("/");
-                        res.setPronunciation("/" + firstLine[1] + '/');
-                    } else if (line.length() == englishText.length() + 1) {
-                        res.setPronunciation("");
-                    }
-                    String vietnamText = "";
-                    String type = "";
-                    line = bufferedReader.readLine();
-                    while ( line != null && line.length() != 0 && line.charAt(0) != '@') {// ban đầu dùng line.charAt(0) != '@' sai do có dòng trống
-                        vietnamText += line + '\n';
-                        if (line.charAt(0) == '*') {
-                            type += line + '\n';
-                        }
-                        line = bufferedReader.readLine();
-                    }
-                    res.setVietnamText(vietnamText);
-                    res.setType(type);
-                    return res;
-                } else {
-                    check = true;
-                    line = bufferedReader.readLine();
+                wordList.put(word, new Word(word, pronunciation, meaning));
+
+                if (line == null) {
+                    break;
                 }
             }
-            bufferedReader.close();
-//            fileInputStream.close();
-        } catch (IOException e) {
-            e.printStackTrace();
         }
-        return res;
+        reader.close();
     }
-    public static boolean addAWord(Word input) throws IOException {
-        File file = new File(path);
-        FileWriter fileWriter = new FileWriter(file.getAbsoluteFile(), true);
-        BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
-        boolean exis = !lookupWord(input.getEnglishText()).getVietnamText().equals("Khong co tu nay trong tu dien");
-        ;
-            if( !exis && !input.getVietnamText().equals("") && !input.getEnglishText().equals("")) {
-                bufferedWriter.write("@" + input.getEnglishText() + "\n" + input.getVietnamText()+"\n");
-                bufferedWriter.close();
-                fileWriter.close();
-                return true;
+
+    public static Word lookupWord(String englishWord) {
+        if (!wordList.containsKey(englishWord)) return null;
+
+        Word result = wordList.get(englishWord);
+        var tmpRef = new Object() {
+            String partsOfSpeech = "";
+        }; //Create a new temporary object just to use the string pOS in functional interface instantiation.
+
+        result.getVietnamText().lines().forEach(line -> {
+            if (line.startsWith("* ")) {
+                tmpRef.partsOfSpeech += line.substring(2) + "\n";
             }
-            else {
-                return false;
-            }
+        });
+
+        result.setPartOfSpeech(tmpRef.partsOfSpeech);
+        // We have to process parts of speech appending as above coz it haven't had yet.
+        return result;
     }
-    public static void speakVoiceEn(String text) {
-        System.setProperty("freetts.voices", "com.sun.speech.freetts.en.us.cmu_us_kal.KevinVoiceDirectory");
-        Voice voice = VoiceManager.getInstance().getVoice("kevin16");//Getting voice
-        if (voice != null) {
-            voice.allocate();//Allocating Voice
-        }
-        try {
-            voice.setRate(150);//Setting the rate of the voice
-            voice.setPitch(100);//Setting the Pitch of the voice
-            voice.setVolume(5);//Setting the volume of the voice
-            voice.speak(text);//Calling speak() method
 
-        }
-        catch(Exception e)
-        {
-            e.printStackTrace();
-        }
+    public static boolean addAWord(Word newWord) throws IOException {
+        boolean wordExist = wordList.containsKey(newWord.getEnglishText());
+        //May supplement pronunciation adding feature(optional).
+        if (!wordExist && !newWord.getVietnamText().equals("") && !newWord.getEnglishText().equals("")) {
+            String engWord = newWord.getEnglishText();
+            String pronunciation = newWord.getPronunciation();
+            String partOfSpeech = newWord.getPartOfSpeech();
+            String meaning = newWord.getVietnamText();
 
+            wordList.put(engWord, new Word(engWord, pronunciation, meaning));
+            String wordToAppend = engWord + " " + pronunciation + "\n" + meaning;
+            Files.write(Paths.get(path), //append the word just added
+                    wordToAppend.getBytes(),
+                    StandardOpenOption.APPEND);
+            return true;
+        }
+        return false;
+    }
+    public static void editWord(String replacedWord) {
+
+    }
+    public static void removeWord(String word) {
+
+    }
+    public static void transferWordFromFileToList() {
+
+    }
+
+    private static String getPronunciation(final String firstLine) {
+        String[] arr = firstLine.split(" ");
+        if (arr.length > 1) {
+            return arr[1];
+        }
+        return "";
+    }
+
+    private static String getWord(final String firstLine) { //only used for the line that contains main Word.
+        String[] arr = firstLine.split(" ");
+        if (firstLine.charAt(1) == '@') {
+            return arr[0].substring(2);
+        } else {
+            return arr[0].substring(1);
+        }
     }
 }

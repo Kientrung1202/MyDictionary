@@ -83,7 +83,7 @@ public class dichDoanVan {
     //back
     @FXML
     void back(MouseEvent event) throws IOException {
-        HelloApplication.setRoot("home");
+        Dictionary.setRoot("Home");
     }
 
     @FXML
@@ -121,5 +121,9 @@ public class dichDoanVan {
 
     @FXML
     void initialize() {
+    }
+
+    void getTranslatedString() {
+        if (input.getText() != null) output.setText("Da duoc dich");
     }
 }
