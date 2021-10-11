@@ -1,6 +1,5 @@
 package com.example.trung;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -8,13 +7,13 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class translateAWord {
+    String searchedWord = null;
 
     @FXML
     private ResourceBundle resources;
@@ -23,13 +22,14 @@ public class translateAWord {
     private URL location;
 
     @FXML
+    public  Label  vietnam;
+
+    @FXML
     private Label english;
 
     @FXML
     private ImageView btnBack;
 
-    @FXML
-    public  Label  vietnam;
     @FXML
     private TextField input;
 
@@ -37,34 +37,42 @@ public class translateAWord {
     private Button search;
 
     @FXML
-    void seachAWord(ActionEvent event) throws IOException {
-        String word = input.getText();
-        Word result = DictionaryManagement.lookupWord(word);
-        if (!result.getVietnamText().equals("Khong co tu nay trong tu dien")){
-            wordLookedUp.addIntoList(result);
-        }
-        setVietnam(result.getVietnamText());
-        setEng(result.getEnglishText()+"\n"+result.getPronunciation());
-    }
-
-    @FXML
-    void searchByEnter(KeyEvent event) throws IOException {
-        if(event.getCode() == KeyCode.ENTER) {
-            String word = input.getText();
-            Word result = DictionaryManagement.lookupWord(word);
-            if (!result.getVietnamText().equals("Khong co tu nay trong tu dien")){
-                wordLookedUp.addIntoList(result);
-            } 
+    void lookUpWord() throws IOException {
+        searchedWord = input.getText();
+        Word result = DictionaryManagement.lookupWord(searchedWord);
+        if (result != null){
+            LookUpHistory.addIntoList(result);
+            setEng(result.getEnglishText() + "\n" + result.getPronunciation());
             setVietnam(result.getVietnamText());
-            setEng(result.getEnglishText()+"\n"+result.getPronunciation());
+        }
+        else {
+            setEng(searchedWord);
+            setVietnam("Khong co tu nay trong tu dien");
         }
     }
 
+    @FXML
+    void lookUpWordByEnter(KeyEvent event) throws IOException {
+        if(event.getCode() == KeyCode.ENTER || event.getCode() == KeyCode.ESCAPE) {
+            searchedWord = input.getText();
+            Word result = DictionaryManagement.lookupWord(searchedWord);
+            if (result != null){
+                LookUpHistory.addIntoList(result);
+                setEng(result.getEnglishText() + "\n" + result.getPronunciation());
+                setVietnam(result.getVietnamText());
+            }
+            else {
+                setEng(searchedWord);
+                setVietnam("Khong co tu nay trong tu dien");
+            }
+        }
+    }
 
     @FXML
-    void back(MouseEvent event) throws IOException {
-        HelloApplication.setRoot("home");
+    void back() throws IOException {
+        Dictionary.setRoot("Home");
     }
+
     public  void setVietnam(String viet) {
         vietnam.setText(viet);
     }
@@ -72,9 +80,10 @@ public class translateAWord {
     public  void setEng(String eng) {
         english.setText(eng);
     }
-    public void showResult(Word a) {
-        setVietnam(a.getVietnamText());
-        setEng(a.getEnglishText() + "\n" +a.getPronunciation());
+
+    public void showWordContentFromHomePage(Word word) {
+        setEng(word.getEnglishText() + "\n" +word.getPronunciation());
+        setVietnam(word.getVietnamText());
     }
 
     @FXML
@@ -82,7 +91,7 @@ public class translateAWord {
         assert english != null : "fx:id=\"english\" was not injected: check your FXML file 'translateAWord.fxml'.";
         assert btnBack != null : "fx:id=\"btnBack\" was not injected: check your FXML file 'translateAWord.fxml'.";
         assert vietnam != null : "fx:id=\"vietnam\" was not injected: check your FXML file 'translateAWord.fxml'.";
-        showResult(home.getRes());
-        input.setPromptText(home.getRes().getEnglishText());
+        input.setText(Home.getResult().getEnglishText());
+        showWordContentFromHomePage(Home.getResult());
     }
 }

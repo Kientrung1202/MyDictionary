@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DialogPane?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+
+<DialogPane prefHeight="262.0" prefWidth="361.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.trung.SucceededAdditionNoticeBox">
+   <header>
+      <AnchorPane prefHeight="93.0" prefWidth="378.0">
+         <children>
+            <Label alignment="CENTER" layoutX="5.0" prefHeight="93.0" prefWidth="361.0" text=" Result" textAlignment="CENTER" textFill="#ab1234" wrapText="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="0.0">
+               <font>
+                  <Font size="40.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+   </header>
+   <content>
+      <AnchorPane prefHeight="171.0" prefWidth="361.0">
+         <children>
+            <Button fx:id="close" layoutX="283.0" layoutY="120.0" mnemonicParsing="false" onAction="#closeStage" prefHeight="27.0" prefWidth="50.0" text="close" />
+            <Label alignment="CENTER" layoutX="14.0" layoutY="42.0" prefHeight="32.0" prefWidth="229.0" text="Thêm thành công" textFill="#2ac166">
+               <font>
+                  <Font name="System Bold" size="22.0" />
+               </font>
+            </Label>
+            <ImageView fitHeight="48.0" fitWidth="52.0" layoutX="279.0" layoutY="36.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../images/ok.png" />
+               </image>
+            </ImageView>
+            <Line endX="239.5" layoutX="180.0" startX="-100.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+         </children>
+      </AnchorPane>
+   </content>
+   <graphic>
+      <AnchorPane prefHeight="200.0" prefWidth="200.0" />
+   </graphic>
+</DialogPane>

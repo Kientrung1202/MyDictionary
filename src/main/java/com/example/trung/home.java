@@ -11,12 +11,14 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class home {
+public class Home {
+    private static String searchedWord = null;
+    private static Word result = new Word();
 
-    private static Word res = new Word();
-    public static Word getRes() {
-        return res;
+    public static Word getResult() {
+        return result;
     }
+
     @FXML
     private ResourceBundle resources;
 
@@ -24,60 +26,72 @@ public class home {
     private URL location;
 
     @FXML
-    private TextField wordLookup;
+    private TextField wordLookUpField;
 
     @FXML
     private Button btnDichDoanVan;
+
     @FXML
     private Button search;
+
     @FXML
     private Button btnAdd;
+
     @FXML
     private Button lookedUp;
 
     @FXML
     void addAWord(ActionEvent event) throws IOException {
-        HelloApplication.setRoot("AddAWord");
+        Dictionary.setRoot("AddAWord");
     }
+
     @FXML
     void dichDoanVan(ActionEvent event) throws IOException {
-        HelloApplication.setRoot("dichDoanVan");
+        Dictionary.setRoot("dichDoanVan");
     }
 
     @FXML
     void searchAWord(ActionEvent event) throws IOException {
-        String abc = wordLookup.getText();
-        if(abc.length() > 0) {
-            res = DictionaryManagement.lookupWord(abc);
-            // tuc la neu ton tai trong tu dien thi them vao phan tu da tim
-            if (!res.getVietnamText().equals("Khong co tu nay trong tu dien")){
-                wordLookedUp.addIntoList(res);
+        searchedWord = wordLookUpField.getText();
+        if(searchedWord.length() > 0) {
+            result = DictionaryManagement.lookupWord(searchedWord);
+            if (result != null){
+                LookUpHistory.addIntoList(result);
             }
-            HelloApplication.setRoot("translateAWord");
+            else {
+                result = new Word(searchedWord, "", "Khong co tu nay trong tu dien");
+            }
+            Dictionary.setRoot("translateAWord");
         }
     }
+
     @FXML
     void searchAWordByEnter(KeyEvent event) throws IOException {
         if(event.getCode() == KeyCode.ENTER) {
-            String abc = wordLookup.getText();
-            if(abc.length() > 0) {
-                res = DictionaryManagement.lookupWord(abc);
-                // tuc la ton tai trong tu dien thi them vao phan tu da tim
-                if (!res.getVietnamText().equals("Khong co tu nay trong tu dien")) {
-                    wordLookedUp.addIntoList(res);
+            searchedWord = wordLookUpField.getText();
+            if(searchedWord.length() > 0) {
+                result = DictionaryManagement.lookupWord(searchedWord);
+                if (result != null){
+                    LookUpHistory.addIntoList(result);
                 }
-                HelloApplication.setRoot("translateAWord");
+                else {
+                    result = new Word(searchedWord, "", "Khong co tu nay trong tu dien");
+                }
+
+                Dictionary.setRoot("translateAWord");
             }
         }
     }
+
     @FXML
     void wordLookedUp(ActionEvent event) throws  IOException {
-        HelloApplication.setRoot("wordLookedUp");
+        Dictionary.setRoot("LookUpHistory");
     }
+
     @FXML
-    void initialize() {
-        assert wordLookup != null : "fx:id=\"wordLookup\" was not injected: check your FXML file 'home.fxml'.";
-        assert search != null : "fx:id=\"search\" was not injected: check your FXML file 'home.fxml'.";
-        assert btnDichDoanVan != null : "fx:id=\"btnDichDoanVan\" was not injected: check your FXML file 'home.fxml'.";
+    void initialize() throws IOException {
+        assert wordLookUpField != null : "fx:id=\"wordLookUpField\" was not injected: check your FXML file 'Home.fxml'.";
+        assert search != null : "fx:id=\"search\" was not injected: check your FXML file 'Home.fxml'.";
+        assert btnDichDoanVan != null : "fx:id=\"btnDichDoanVan\" was not injected: check your FXML file 'Home.fxml'.";
     }
 }

@@ -84,8 +84,8 @@
                   <ColorAdjust brightness="0.1" contrast="-0.32" />
                </effect>
             </Label>
-            <TextField fx:id="input" layoutX="151.0" layoutY="107.0" onKeyReleased="#searchByEnter" style="-fx-background-radius: 10px;" AnchorPane.bottomAnchor="18.5" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="100.0" AnchorPane.topAnchor="113.0" />
-            <Button fx:id="search" layoutX="526.0" layoutY="118.0" mnemonicParsing="false" onAction="#seachAWord" style="-fx-background-radius: 10px;" text="search" textAlignment="CENTER" AnchorPane.bottomAnchor="17.5" AnchorPane.leftAnchor="520.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="113.0" />
+            <TextField fx:id="input" layoutX="151.0" layoutY="107.0" onKeyReleased="#lookUpWordByEnter" style="-fx-background-radius: 10px;" AnchorPane.bottomAnchor="18.5" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="100.0" AnchorPane.topAnchor="113.0" />
+            <Button fx:id="search" layoutX="526.0" layoutY="118.0" mnemonicParsing="false" onAction="#lookUpWord" style="-fx-background-radius: 10px;" text="search" textAlignment="CENTER" AnchorPane.bottomAnchor="17.5" AnchorPane.leftAnchor="520.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="113.0" />
          </children>
       </AnchorPane>
    </top>

@@ -34,7 +34,7 @@ public class dichDoanVan {
 
     @FXML
     void back(MouseEvent event) throws IOException {
-        HelloApplication.setRoot("home");
+        Dictionary.setRoot("Home");
     }
 
     @FXML
@@ -55,5 +55,9 @@ public class dichDoanVan {
         assert output != null : "fx:id=\"output\" was not injected: check your FXML file 'dichDoanVan.fxml'.";
         assert btnback != null : "fx:id=\"btnback\" was not injected: check your FXML file 'dichDoanVan.fxml'.";
 
+    }
+
+    void getTranslatedString() {
+        if (input.getText() != null) output.setText("Da duoc dich");
     }
 }

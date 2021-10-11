@@ -46,7 +46,7 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="680.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.trung.dichDoanVan">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="680.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.trung.dichDoanVan">
    <top>
       <VBox alignment="CENTER" prefHeight="100.0" prefWidth="800.0" style="-fx-background-color: #ab123456;" BorderPane.alignment="CENTER">
          <children>
@@ -105,11 +105,7 @@
             <StackPane prefHeight="231.0" prefWidth="455.0">
                <children>
                   <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#fffffffc" height="231.0" stroke="BLACK" strokeType="INSIDE" width="456.0" />
-                  <Label alignment="CENTER" prefHeight="230.0" prefWidth="456.0" textAlignment="CENTER">
-                     <font>
-                        <Font size="20.0" />
-                     </font>
-                  </Label>
+                  <TextArea fx:id="output" prefHeight="200.0" prefWidth="200.0" />
                </children>
             </StackPane>
          </children>
