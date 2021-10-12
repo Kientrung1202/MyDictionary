@@ -9,10 +9,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
@@ -24,8 +21,9 @@ import java.util.*;
 public class LookUpHistory {
     private static final File logFile = new File("src/main/resources/data/lookuplog.txt");
 
-    //key value is the word looked up
-    private static Set<String> list = new LinkedHashSet<>(50);
+    private static final int maxCapacity = 20;
+
+    private static Set<String> wordSet = new LinkedHashSet<>(maxCapacity);
 
     @FXML
     private ResourceBundle resources;
@@ -40,20 +38,20 @@ public class LookUpHistory {
     private TableColumn<Word, String> english;
 
     @FXML
-    private TableColumn<Word, String> pro;
+    private TableColumn<Word, String> pronunciation;
 
     @FXML
-    private TableColumn<Word, String> partOfSpeech;
+    private TableColumn<Word, String> partsOfSpeech;
 
     @FXML
-    private TableColumn<Word, String> vietnam;
+    private TableColumn<Word, String> vietnamese;
 
     @FXML
     private ImageView back;
 
     @FXML
     void returnHome(MouseEvent event) throws IOException {
-        Dictionary.setRoot("Home");
+        DictionaryApplication.setRoot("Home");
     }
 
     @FXML
@@ -63,19 +61,21 @@ public class LookUpHistory {
 
     public void initTable() {
         english.setCellValueFactory(new PropertyValueFactory<Word, String>("englishText"));
-        pro.setCellValueFactory(new PropertyValueFactory<Word, String>("pronunciation"));
-        partOfSpeech.setCellValueFactory(new PropertyValueFactory<Word, String>("partOfSpeech"));
-        vietnam.setCellValueFactory(new PropertyValueFactory<Word, String>("vietnamText"));
+        pronunciation.setCellValueFactory(new PropertyValueFactory<Word, String>("pronunciation"));
+        partsOfSpeech.setCellValueFactory(new PropertyValueFactory<Word, String>("partsOfSpeech"));
+        vietnamese.setCellValueFactory(new PropertyValueFactory<Word, String>("vietnamText"));
 
         ObservableList<Word> List = getObservableList();
         tbview.setItems(List);
     }
 
-    public ObservableList<Word> getObservableList() { //reverse the word list here to get the desired order by latest time
+    public ObservableList<Word> getObservableList() { //reverse the word wordSet here to get the desired order by latest time
         List<Word> wordArray = new ArrayList<>();
-        list.forEach(wordInLog -> {
-            Word tmpWord = DictionaryManagement.lookupWord(wordInLog);
-            wordArray.add(tmpWord);
+        wordSet.forEach(wordInLog -> {
+            if(wordInLog.length() > 0) {
+                Word tmpWord = DictionaryManagement.lookUp(wordInLog);
+                if(tmpWord != null) wordArray.add(tmpWord);
+            }
         });
         Collections.reverse(wordArray);
         ObservableList<Word> result = FXCollections.observableList(wordArray);
@@ -83,7 +83,15 @@ public class LookUpHistory {
     }
 
     public static void addIntoList(Word x) throws IOException {
-        if (list.add(x.getEnglishText())) {
+        boolean isFull = false;
+        if (wordSet.size() == maxCapacity) isFull = true;
+        if (wordSet.add(x.getEnglishText())) {
+            if (isFull) {
+                String oldestSavedWord = wordSet.stream().toList().get(0);
+                wordSet.remove(oldestSavedWord);
+                writeToFile();
+                return;
+            }
             String wordToAppend = x.getEnglishText() + "\r\n";
             Files.write(Paths.get(logFile.toURI()), //append the word just looked up to file
                     wordToAppend.getBytes(),
@@ -99,8 +107,44 @@ public class LookUpHistory {
         BufferedReader reader = new BufferedReader(new FileReader(logFile));
         String word = "";
         while((word = reader.readLine()) != null) {
-            list.add(word);
+            if(word.length() > 0) {
+                wordSet.add(word);
+            }
         }
         reader.close();
     }
+
+    public static void editWord(String replacedWord, String newWord) throws IOException {
+        //look up the word, if it exists then change it and return true. Otherwise, return false.
+        if (!wordSet.contains(replacedWord)) {
+            return;
+        }
+        ArrayList<String> wordArray = new ArrayList<>();
+        wordArray.addAll(wordSet);
+        int index = wordArray.indexOf(replacedWord);
+        wordArray.set(index, newWord);
+        wordSet.clear();
+        wordSet.addAll(wordArray);
+
+        writeToFile();
+    }
+
+    private static void writeToFile() throws IOException {
+        if (wordSet.isEmpty()) return;
+
+        FileWriter writer = new FileWriter(logFile);
+        wordSet.forEach(wordInSet -> {
+            try {
+                writer.write(wordInSet + "\r\n");
+            } catch(IOException e) {
+                e.printStackTrace();
+            }
+        });
+        writer.close();
+    }
+
+//    public static void main(String [] args) throws IOException {
+//        initList();
+//        addIntoList(new Word("D765seFj", "ADJECTIVE", "no meaning"));
+//    }
 }

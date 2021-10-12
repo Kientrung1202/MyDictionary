@@ -99,10 +99,10 @@
                 <version>0.0.6</version>
                 <executions>
                     <execution>
-                        <!-- Default configuration for running with: mvn clean javafx:run -->
+                        <!-- Default configuration for running with: mvn clean javafx:process -->
                         <id>default-cli</id>
                         <configuration>
-                            <mainClass>com.example.trung/com.example.trung.Dictionary</mainClass>
+                            <mainClass>com.example.trung/com.example.trung.DictionaryApplication</mainClass>
                         </configuration>
                     </execution>
                 </executions>

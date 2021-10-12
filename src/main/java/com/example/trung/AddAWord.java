@@ -3,6 +3,7 @@ package com.example.trung;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -24,8 +25,10 @@ public class AddAWord {
     private TextField english;
 
     @FXML
-    private TextField vietnam;
+    private TextField pronunciation;
 
+    @FXML
+    private TextArea vietnamese;
 
     @FXML
     private ImageView back;
@@ -37,35 +40,40 @@ public class AddAWord {
     @FXML
     void addAWord(ActionEvent event) throws IOException {
         String englishText = english.getText();
-        String vietnamText = vietnam.getText();
+        String vietnamText = vietnamese.getText();
         Word newWord = new Word(englishText, "", vietnamText);
         boolean ok = DictionaryManagement.addAWord(newWord);
         if(ok) {
             english.setText(""); //reset 2 text fields
-            vietnam.setText("");
-            Stage newStage = Dictionary.addAScene("SucceededAdditionNoticeBox");
+            vietnamese.setText("");
+            Stage newStage = DictionaryApplication.addAScene("SucceededAdditionNoticeBox");
             newStage.show();
         } else {
-            Stage newStage = Dictionary.addAScene("FailedAdditionNoticeBox");
+            Stage newStage = DictionaryApplication.addAScene("FailedAdditionNoticeBox");
             newStage.show();
         }
 //        if (ok) {
 //            //hien asert ok
 //            c
 //            SucceededAdditionNoticeBox.setResult(true);
-//            Stage newStage = Dictionary.addAScene("SucceededAdditionNoticeBox");
+//            Stage newStage = DictionaryApplication.addAScene("SucceededAdditionNoticeBox");
 //            newStage.show();
 //        } else {
 //            //hien asert khong ok
 //            SucceededAdditionNoticeBox.setResult(false);
-//            Stage newStage = Dictionary.addAScene("SucceededAdditionNoticeBox");
+//            Stage newStage = DictionaryApplication.addAScene("SucceededAdditionNoticeBox");
 //            newStage.show();
 //        }
     }
 
     @FXML
     void back(MouseEvent event) throws IOException {
-        Dictionary.setRoot("Home");
+        DictionaryApplication.setRoot("Home");
+    }
+
+    @FXML
+    void clickOnPageHandle() {
+
     }
     @FXML
     void initialize() {
