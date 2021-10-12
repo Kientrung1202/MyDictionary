@@ -34,7 +34,7 @@ public class dichDoanVan {
 
     @FXML
     void back(MouseEvent event) throws IOException {
-        Dictionary.setRoot("Home");
+        DictionaryApplication.setRoot("Home");
     }
 
     @FXML

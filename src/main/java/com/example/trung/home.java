@@ -12,7 +12,6 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class Home {
-    private static String searchedWord = null;
     private static Word result = new Word();
 
     public static Word getResult() {
@@ -29,69 +28,87 @@ public class Home {
     private TextField wordLookUpField;
 
     @FXML
+    private Button searchingButton;
+
+    @FXML
     private Button btnDichDoanVan;
 
     @FXML
-    private Button search;
+    private Button wordAddingButton;
 
     @FXML
-    private Button btnAdd;
+    private Button searchHistoryButton;
 
     @FXML
-    private Button lookedUp;
+    private Button wordEditingButton;
 
     @FXML
-    void addAWord(ActionEvent event) throws IOException {
-        Dictionary.setRoot("AddAWord");
-    }
-
-    @FXML
-    void dichDoanVan(ActionEvent event) throws IOException {
-        Dictionary.setRoot("dichDoanVan");
-    }
+    private Button wordRemovingButton;
 
     @FXML
     void searchAWord(ActionEvent event) throws IOException {
-        searchedWord = wordLookUpField.getText();
-        if(searchedWord.length() > 0) {
-            result = DictionaryManagement.lookupWord(searchedWord);
-            if (result != null){
+        String enteredWord = wordLookUpField.getText();
+        if (enteredWord.length() > 0) {
+            result = DictionaryManagement.lookUp(enteredWord);
+            if (result != null) {
                 LookUpHistory.addIntoList(result);
+            } else {
+                result = new Word(enteredWord, "", "Khong co tu nay trong tu dien");
             }
-            else {
-                result = new Word(searchedWord, "", "Khong co tu nay trong tu dien");
-            }
-            Dictionary.setRoot("translateAWord");
+            DictionaryApplication.setRoot("translateAWord");
         }
     }
 
     @FXML
     void searchAWordByEnter(KeyEvent event) throws IOException {
-        if(event.getCode() == KeyCode.ENTER) {
-            searchedWord = wordLookUpField.getText();
-            if(searchedWord.length() > 0) {
-                result = DictionaryManagement.lookupWord(searchedWord);
-                if (result != null){
+        if (event.getCode() == KeyCode.ENTER) {
+            String enteredWord = wordLookUpField.getText();
+            if (enteredWord.length() > 0) {
+                result = DictionaryManagement.lookUp(enteredWord);
+                if (result != null) {
                     LookUpHistory.addIntoList(result);
-                }
-                else {
-                    result = new Word(searchedWord, "", "Khong co tu nay trong tu dien");
+                } else {
+                    result = new Word(enteredWord, "", "Khong co tu nay trong tu dien");
                 }
 
-                Dictionary.setRoot("translateAWord");
+                DictionaryApplication.setRoot("translateAWord");
             }
         }
     }
 
     @FXML
-    void wordLookedUp(ActionEvent event) throws  IOException {
-        Dictionary.setRoot("LookUpHistory");
+    void dichDoanVan(ActionEvent event) throws IOException {
+        DictionaryApplication.setRoot("dichDoanVan");
     }
 
     @FXML
-    void initialize() throws IOException {
+    void openSearchHistoryPage(ActionEvent event) throws IOException {
+        DictionaryApplication.setRoot("LookUpHistory");
+    }
+
+    @FXML
+    void openWordAddingPage(ActionEvent event) throws IOException {
+        DictionaryApplication.setRoot("AddAWord");
+    }
+
+    @FXML
+    void openWordEditingPage(ActionEvent event) throws IOException {
+        DictionaryApplication.setRoot("EditWord");
+    }
+
+    @FXML
+    void openWordRemovingPage(ActionEvent event) throws IOException {
+//        DictionaryApplication.setRoot("AddAWord");
+    }
+
+    @FXML
+    void initialize() {
         assert wordLookUpField != null : "fx:id=\"wordLookUpField\" was not injected: check your FXML file 'Home.fxml'.";
-        assert search != null : "fx:id=\"search\" was not injected: check your FXML file 'Home.fxml'.";
+        assert searchingButton != null : "fx:id=\"searchingButton\" was not injected: check your FXML file 'Home.fxml'.";
         assert btnDichDoanVan != null : "fx:id=\"btnDichDoanVan\" was not injected: check your FXML file 'Home.fxml'.";
+        assert wordAddingButton != null : "fx:id=\"wordAddingButton\" was not injected: check your FXML file 'Home.fxml'.";
+        assert searchHistoryButton != null : "fx:id=\"searchHistoryButton\" was not injected: check your FXML file 'Home.fxml'.";
+        assert wordEditingButton != null : "fx:id=\"wordEditingButton\" was not injected: check your FXML file 'Home.fxml'.";
+        assert wordRemovingButton != null : "fx:id=\"wordRemovingButton\" was not injected: check your FXML file 'Home.fxml'.";
     }
 }

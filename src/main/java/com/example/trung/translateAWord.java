@@ -39,7 +39,7 @@ public class translateAWord {
     @FXML
     void lookUpWord() throws IOException {
         searchedWord = input.getText();
-        Word result = DictionaryManagement.lookupWord(searchedWord);
+        Word result = DictionaryManagement.lookUp(searchedWord);
         if (result != null){
             LookUpHistory.addIntoList(result);
             setEng(result.getEnglishText() + "\n" + result.getPronunciation());
@@ -55,7 +55,7 @@ public class translateAWord {
     void lookUpWordByEnter(KeyEvent event) throws IOException {
         if(event.getCode() == KeyCode.ENTER || event.getCode() == KeyCode.ESCAPE) {
             searchedWord = input.getText();
-            Word result = DictionaryManagement.lookupWord(searchedWord);
+            Word result = DictionaryManagement.lookUp(searchedWord);
             if (result != null){
                 LookUpHistory.addIntoList(result);
                 setEng(result.getEnglishText() + "\n" + result.getPronunciation());
@@ -70,7 +70,7 @@ public class translateAWord {
 
     @FXML
     void back() throws IOException {
-        Dictionary.setRoot("Home");
+        DictionaryApplication.setRoot("Home");
     }
 
     public  void setVietnam(String viet) {
