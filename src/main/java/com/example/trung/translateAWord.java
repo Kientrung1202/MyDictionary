@@ -30,6 +30,10 @@ public class translateAWord {
 
     @FXML
     public  Label  vietnam;
+
+    @FXML
+    private ImageView sound;
+
     @FXML
     private TextField input;
 
@@ -60,6 +64,13 @@ public class translateAWord {
         }
     }
 
+    @FXML
+    void soundAWord(MouseEvent event) {
+        if(!vietnam.getText().equals("Khong co tu nay trong tu dien")) {
+            String text = (!input.getText().equals("")) ? input.getText() : input.getPromptText();
+            DictionaryManagement.speakVoiceEn(text);
+        }
+    }
 
     @FXML
     void back(MouseEvent event) throws IOException {

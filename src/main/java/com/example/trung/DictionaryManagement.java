@@ -1,7 +1,10 @@
 package com.example.trung;
 
+import com.sun.speech.freetts.Voice;
+import com.sun.speech.freetts.VoiceManager;
+
 import java.io.*;
-import java.lang.String;
+
 
 public class DictionaryManagement {
     private static final String path = "C:\\Users\\ADMIN\\OneDrive\\Desktop\\trung\\src\\main\\resources\\data\\trung.txt";
@@ -87,5 +90,24 @@ public class DictionaryManagement {
             else {
                 return false;
             }
+    }
+    public static void speakVoiceEn(String text) {
+        System.setProperty("freetts.voices", "com.sun.speech.freetts.en.us.cmu_us_kal.KevinVoiceDirectory");
+        Voice voice = VoiceManager.getInstance().getVoice("kevin16");//Getting voice
+        if (voice != null) {
+            voice.allocate();//Allocating Voice
+        }
+        try {
+            voice.setRate(150);//Setting the rate of the voice
+            voice.setPitch(100);//Setting the Pitch of the voice
+            voice.setVolume(5);//Setting the volume of the voice
+            voice.speak(text);//Calling speak() method
+
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace();
+        }
+
     }
 }
