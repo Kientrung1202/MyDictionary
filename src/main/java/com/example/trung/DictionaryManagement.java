@@ -9,10 +9,13 @@ import java.nio.file.StandardOpenOption;
 import java.util.Map;
 import java.util.LinkedHashMap;
 
-public class DictionaryManagement {
-    private static final String path = "src/main/resources/data/raw dictionary(en-vi).txt";
+//import com.sun.speech.freetts.Voice;
+//import com.sun.speech.freetts.VoiceManager;
 
-    private static Map<String, Word> wordList = new LinkedHashMap<>(1024);
+public class DictionaryManagement {
+    private static final String path = "MyDictionary/src/main/resources/data/raw dictionary(en-vi).txt";
+
+    private static Map<String, Word> wordList = new LinkedHashMap<>(104000);
 
     private static void wordListInitialize() throws IOException { //read file to wordList
         BufferedReader reader = Files.newBufferedReader(FileSystems.getDefault().getPath(path));
@@ -155,13 +158,23 @@ public class DictionaryManagement {
         return word.replaceFirst(oldChar.toString(), newChar.toString());
     }
 
-    //    public static File getDictionaryFile() {
-//        return new File(path);
-//    }
-
-//    public static void main(String[] args) {
-//        String str = "FlslTc";
-//        System.out.println(str.toLowerCase(Locale.ROOT));
-//        System.out.println(str);
+//    public static void speakVoiceEn(String text) {
+//        System.setProperty("freetts.voices", "com.sun.speech.freetts.en.us.cmu_us_kal.KevinVoiceDirectory");
+//        Voice voice = VoiceManager.getInstance().getVoice("kevin16");//Getting voice
+//        if (voice != null) {
+//            voice.allocate();//Allocating Voice
+//        }
+//        try {
+//            voice.setRate(150);//Setting the rate of the voice
+//            voice.setPitch(100);//Setting the Pitch of the voice
+//            voice.setVolume(5);//Setting the volume of the voice
+//            voice.speak(text);//Calling speak() method
+//
+//        }
+//        catch(Exception e)
+//        {
+//            e.printStackTrace();
+//        }
+//
 //    }
 }

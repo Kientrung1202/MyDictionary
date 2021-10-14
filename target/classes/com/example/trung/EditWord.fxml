@@ -16,27 +16,27 @@
             <Font name="System Bold" size="24.0" />
          </font>
       </Label>
-      <Label alignment="CENTER" layoutX="68.0" layoutY="235.0" prefHeight="39.0" prefWidth="128.0" text="Từ gốc:" textAlignment="CENTER" textFill="#2b7486" AnchorPane.leftAnchor="68.0" AnchorPane.rightAnchor="404.0">
+      <Label alignment="CENTER" layoutX="61.0" layoutY="192.0" prefHeight="39.0" prefWidth="106.0" text="Từ gốc:" textAlignment="CENTER" textFill="#2b7486" AnchorPane.leftAnchor="61.0" AnchorPane.rightAnchor="433.0">
          <font>
             <Font name="Arial" size="25.0" />
          </font>
       </Label>
-      <TextField fx:id="replacedWordField" alignment="TOP_LEFT" layoutX="203.0" layoutY="230.0" onAction="#process" onKeyTyped="#checkReplacedWord" prefHeight="50.0" prefWidth="383.0" promptText="Enter here" AnchorPane.leftAnchor="203.0" AnchorPane.rightAnchor="14.0">
+      <TextField fx:id="replacedWordField" alignment="TOP_LEFT" layoutX="167.0" layoutY="186.0" onAction="#process" onKeyTyped="#checkReplacedWord" prefHeight="50.0" prefWidth="383.0" promptText="Enter here" AnchorPane.leftAnchor="167.0" AnchorPane.rightAnchor="50.0">
          <font>
             <Font size="23.0" />
          </font>
       </TextField>
-      <Label alignment="CENTER" layoutX="21.0" layoutY="357.0" prefHeight="38.0" prefWidth="182.0" text="Từ thay thế:" textFill="#2b7486" AnchorPane.leftAnchor="21.0" AnchorPane.rightAnchor="397.0">
+      <Label alignment="CENTER" layoutY="298.0" prefHeight="38.0" prefWidth="182.0" text="Từ thay thế:" textFill="#2b7486" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="418.0">
          <font>
             <Font name="Arial" size="25.0" />
          </font>
       </Label>
-      <TextField fx:id="replacingWordField" alignment="TOP_LEFT" layoutX="203.0" layoutY="351.0" onAction="#process" onKeyTyped="#checkReplacingWord" prefHeight="50.0" prefWidth="383.0" promptText="Enter here" AnchorPane.leftAnchor="203.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="351.0">
+      <TextField fx:id="replacingWordField" alignment="TOP_LEFT" layoutX="167.0" layoutY="294.0" onAction="#process" onKeyTyped="#checkReplacingWord" prefHeight="39.0" prefWidth="383.0" promptText="Enter here" AnchorPane.leftAnchor="167.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="294.0">
          <font>
             <Font size="22.0" />
          </font>
       </TextField>
-      <Button fx:id="editButton" layoutX="264.0" layoutY="463.0" mnemonicParsing="false" onAction="#process" prefHeight="22.0" prefWidth="72.0" text="Sửa" textFill="#758013" textOverrun="WORD_ELLIPSIS" AnchorPane.bottomAnchor="182.0" AnchorPane.leftAnchor="264.0" AnchorPane.rightAnchor="264.0" AnchorPane.topAnchor="463.0">
+      <Button fx:id="editButton" layoutX="264.0" layoutY="396.0" mnemonicParsing="false" onAction="#process" prefHeight="22.0" prefWidth="72.0" text="Sửa" textFill="#758013" textOverrun="WORD_ELLIPSIS" AnchorPane.bottomAnchor="249.0" AnchorPane.leftAnchor="264.0" AnchorPane.rightAnchor="264.0" AnchorPane.topAnchor="396.0">
          <font>
             <Font name="Rockwell" size="19.0" />
          </font>
@@ -44,7 +44,7 @@
             <InnerShadow height="6.34" radius="2.55" width="5.86" />
          </effect>
       </Button>
-      <ImageView fx:id="back" fitHeight="40.0" fitWidth="40.0" layoutX="54.0" layoutY="126.0" onMouseClicked="#back" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="back" fitHeight="40.0" fitWidth="40.0" layoutX="28.0" layoutY="34.0" onMouseClicked="#back" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../images/back.png" />
          </image>
@@ -54,17 +54,17 @@
             <Font name="System Bold" size="18.0" />
          </font>
       </Label>
-      <Label fx:id="warningForReplacedWord" layoutX="204.0" layoutY="290.0" prefHeight="25.0" prefWidth="283.0" textAlignment="CENTER" textFill="#cf0000b1">
+      <Label fx:id="warningForReplacedWord" layoutX="167.0" layoutY="245.0" prefHeight="25.0" prefWidth="283.0" textAlignment="CENTER" textFill="#cf0000b1">
          <font>
             <Font size="16.0" />
          </font>
       </Label>
-      <Label fx:id="resultOfProcessing" alignment="CENTER" layoutX="190.0" layoutY="513.0" prefHeight="29.0" prefWidth="220.0" textFill="#eb4040">
+      <Label fx:id="resultOfProcessing" alignment="CENTER" layoutX="190.0" layoutY="450.0" prefHeight="29.0" prefWidth="220.0" textFill="#eb4040">
          <font>
             <Font size="16.0" />
          </font>
       </Label>
-      <Label fx:id="warningForReplacingWord" layoutX="204.0" layoutY="410.0" prefHeight="29.0" prefWidth="283.0" textFill="#eb4040">
+      <Label fx:id="warningForReplacingWord" layoutX="167.0" layoutY="346.0" prefHeight="29.0" prefWidth="283.0" textFill="#eb4040">
          <font>
             <Font size="16.0" />
          </font>

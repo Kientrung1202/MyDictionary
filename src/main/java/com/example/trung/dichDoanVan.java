@@ -70,9 +70,9 @@ public class dichDoanVan {
 
     @FXML
     void speakInput(MouseEvent event) {
-        if(EnToVi) {
-            DictionaryManagement.speakVoiceEn(input.getText());
-        }
+//        if(EnToVi) {
+//            DictionaryManagement.speakVoiceEn(input.getText());
+//        }
     }
 
     @FXML

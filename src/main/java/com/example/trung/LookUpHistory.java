@@ -19,7 +19,7 @@ import java.net.URL;
 import java.util.*;
 
 public class LookUpHistory {
-    private static final File logFile = new File("src/main/resources/data/lookuplog.txt");
+    private static final File logFile = new File("MyDictionary/src/main/resources/data/lookuplog.txt");
 
     private static final int maxCapacity = 20;
 
@@ -142,9 +142,4 @@ public class LookUpHistory {
         });
         writer.close();
     }
-
-//    public static void main(String [] args) throws IOException {
-//        initList();
-//        addIntoList(new Word("D765seFj", "ADJECTIVE", "no meaning"));
-//    }
 }

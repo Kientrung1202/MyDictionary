@@ -125,7 +125,7 @@
                </image>
             </ImageView>
             <Button layoutX="300.0" layoutY="299.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="41.0" />
-            <ImageView fx:id="btnOutput" fitHeight="40.0" fitWidth="40.0" layoutX="302.0" layoutY="304.0" onMouseClicked="#speakOutput" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="btnOutput" fitHeight="40.0" fitWidth="40.0" layoutX="301.0" layoutY="304.0" onMouseClicked="#speakOutput" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../../images/loa.jpg" />
                </image>
