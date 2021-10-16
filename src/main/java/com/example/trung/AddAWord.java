@@ -22,13 +22,13 @@ public class AddAWord {
     private URL location;
 
     @FXML
-    private TextField english;
+    private TextField englishField;
 
     @FXML
-    private TextField pronunciation;
+    private TextField pronunciationField;
 
     @FXML
-    private TextArea vietnamese;
+    private TextArea vietnameseField;
 
     @FXML
     private ImageView back;
@@ -36,34 +36,28 @@ public class AddAWord {
     @FXML
     private Button add;
 
-    // buton add click
     @FXML
     void addAWord(ActionEvent event) throws IOException {
-        String englishText = english.getText();
-        String vietnamText = vietnamese.getText();
-        Word newWord = new Word(englishText, "", vietnamText);
+        String englishText = englishField.getText();
+        String vietnamText = vietnameseField.getText();
+        if (englishText.isBlank() || vietnamText.isBlank()) {
+            return;
+        }
+        String pronunciation = pronunciationField.getText();
+        Word newWord = new Word(englishText, pronunciation, vietnamText);
+
         boolean ok = DictionaryManagement.addAWord(newWord);
         if(ok) {
-            english.setText(""); //reset 2 text fields
-            vietnamese.setText("");
+            //reset 3 text fields
+            englishField.setText("");
+            pronunciationField.setText("");
+            vietnameseField.setText("");
             Stage newStage = DictionaryApplication.addAScene("SucceededAdditionNoticeBox");
             newStage.show();
         } else {
             Stage newStage = DictionaryApplication.addAScene("FailedAdditionNoticeBox");
             newStage.show();
         }
-//        if (ok) {
-//            //hien asert ok
-//            c
-//            SucceededAdditionNoticeBox.setResult(true);
-//            Stage newStage = DictionaryApplication.addAScene("SucceededAdditionNoticeBox");
-//            newStage.show();
-//        } else {
-//            //hien asert khong ok
-//            SucceededAdditionNoticeBox.setResult(false);
-//            Stage newStage = DictionaryApplication.addAScene("SucceededAdditionNoticeBox");
-//            newStage.show();
-//        }
     }
 
     @FXML

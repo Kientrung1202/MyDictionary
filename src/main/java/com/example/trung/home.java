@@ -48,7 +48,7 @@ public class Home {
     @FXML
     void searchAWord(ActionEvent event) throws IOException {
         String enteredWord = wordLookUpField.getText();
-        if (enteredWord.length() > 0) {
+        if (!enteredWord.isBlank()) {
             result = DictionaryManagement.lookUp(enteredWord);
             if (result != null) {
                 LookUpHistory.addIntoList(result);
@@ -63,7 +63,7 @@ public class Home {
     void searchAWordByEnter(KeyEvent event) throws IOException {
         if (event.getCode() == KeyCode.ENTER) {
             String enteredWord = wordLookUpField.getText();
-            if (enteredWord.length() > 0) {
+            if (!enteredWord.isBlank()) {
                 result = DictionaryManagement.lookUp(enteredWord);
                 if (result != null) {
                     LookUpHistory.addIntoList(result);
@@ -98,7 +98,7 @@ public class Home {
 
     @FXML
     void openWordRemovingPage(ActionEvent event) throws IOException {
-//        DictionaryApplication.setRoot("AddAWord");
+        DictionaryApplication.setRoot("RemoveWord");
     }
 
     @FXML
