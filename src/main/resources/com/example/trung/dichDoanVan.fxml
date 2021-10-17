@@ -48,19 +48,28 @@
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="680.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.trung.dichDoanVan">
    <top>
-      <VBox alignment="CENTER" prefHeight="100.0" prefWidth="800.0" style="-fx-background-color: #ab123456;" BorderPane.alignment="CENTER">
+      <VBox alignment="CENTER" prefHeight="100.0" prefWidth="800.0" style="-fx-background-color: #ab123456;">
          <children>
-            <Label alignment="CENTER" prefHeight="56.0" prefWidth="604.0" text="Dictionary by Trung Duy Nam" textAlignment="CENTER" textFill="#2fb16a">
-               <font>
-                  <Font name="Elephant" size="27.0" />
-               </font>
-               <effect>
-                  <ColorAdjust brightness="0.1" contrast="-0.32" />
-               </effect>
+            <AnchorPane prefHeight="56.0" prefWidth="585.0">
                <VBox.margin>
                   <Insets />
                </VBox.margin>
-            </Label>
+               <children>
+                  <Label alignment="CENTER" prefHeight="56.0" prefWidth="604.0" text="Dịch đoạn văn" textAlignment="CENTER" textFill="#2fb16a">
+                     <font>
+                        <Font name="Arial Bold" size="29.0" />
+                     </font>
+                     <effect>
+                        <ColorAdjust brightness="0.1" contrast="-0.32" />
+                     </effect>
+                  </Label>
+                  <ImageView fx:id="btnback" fitHeight="48.0" fitWidth="46.0" layoutX="14.0" layoutY="6.0" onMouseClicked="#back" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../images/back.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </AnchorPane>
          </children>
       </VBox>
    </top>
@@ -69,9 +78,9 @@
          <children>
             <AnchorPane prefHeight="60.0" prefWidth="442.0">
                <children>
-                  <Label layoutX="21.0" layoutY="8.0" text="Input:">
+                  <Label layoutY="22.0" text="Tiếng Anh">
                      <font>
-                        <Font size="30.0" />
+                        <Font size="26.0" />
                      </font>
                   </Label>
                   <Button layoutX="386.0" layoutY="13.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="41.0" text="Button" />
@@ -82,16 +91,16 @@
                   </ImageView>
                </children>
             </AnchorPane>
-            <TextArea fx:id="input" prefHeight="200.0" prefWidth="469.0" promptText="Nhập vào đây">
+            <TextArea fx:id="input" prefHeight="200.0" prefWidth="469.0" promptText="Nhập vào đây" wrapText="true">
                <font>
-                  <Font size="20.0" />
+                  <Font size="18.0" />
                </font>
             </TextArea>
             <AnchorPane prefHeight="62.0" prefWidth="442.0">
                <children>
-                  <Label layoutX="21.0" layoutY="8.0" text="Output:">
+                  <Label layoutY="23.0" text="Tiếng Việt:">
                      <font>
-                        <Font size="30.0" />
+                        <Font size="26.0" />
                      </font>
                   </Label>
                   <Button layoutX="389.0" layoutY="11.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="38.0" text="Button" />
@@ -105,7 +114,10 @@
             <StackPane prefHeight="231.0" prefWidth="455.0">
                <children>
                   <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#fffffffc" height="231.0" stroke="BLACK" strokeType="INSIDE" width="456.0" />
-                  <TextArea fx:id="output" prefHeight="200.0" prefWidth="200.0" />
+                  <TextArea fx:id="output" prefHeight="200.0" prefWidth="200.0" wrapText="true">
+                     <font>
+                        <Font name="Arial" size="18.0" />
+                     </font></TextArea>
                </children>
             </StackPane>
          </children>
@@ -119,18 +131,16 @@
       </Label>
    </bottom>
    <left>
-      <AnchorPane prefHeight="552.0" prefWidth="66.0" BorderPane.alignment="CENTER">
-         <children>
-            <Button layoutX="7.0" layoutY="15.0" mnemonicParsing="false" prefHeight="48.0" prefWidth="52.0" text="Button" />
-            <ImageView fx:id="btnback" fitHeight="50.0" fitWidth="58.0" layoutX="8.0" layoutY="14.0" onMouseClicked="#back" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../../images/back.png" />
-               </image>
-            </ImageView>
-         </children>
-      </AnchorPane>
+      <AnchorPane prefHeight="552.0" prefWidth="66.0" BorderPane.alignment="CENTER" />
    </left>
    <right>
-      <AnchorPane prefHeight="552.0" prefWidth="78.0" BorderPane.alignment="CENTER" />
+      <AnchorPane prefHeight="552.0" prefWidth="78.0" BorderPane.alignment="CENTER">
+         <children>
+            <Button fx:id="translateButton" layoutX="8.0" layoutY="221.0" mnemonicParsing="false" onAction="#process" prefHeight="39.0" prefWidth="62.0" text="Dịch">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Button>
+         </children></AnchorPane>
    </right>
 </BorderPane>
