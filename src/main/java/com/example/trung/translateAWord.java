@@ -1,19 +1,19 @@
 package com.example.trung;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class translateAWord {
-    String searchedWord = null;
+    @FXML
+    public ListView suggestedWordListView;
 
     @FXML
     private ResourceBundle resources;
@@ -22,10 +22,13 @@ public class translateAWord {
     private URL location;
 
     @FXML
-    public  Label  vietnam;
+    private TextArea vietnamText;
 
     @FXML
-    private Label english;
+    private Label englishLabel;
+
+    @FXML
+    private Label pronunciationLabel;
 
     @FXML
     private ImageView btnBack;
@@ -38,33 +41,22 @@ public class translateAWord {
 
     @FXML
     void lookUpWord() throws IOException {
-        searchedWord = input.getText();
+        String searchedWord = input.getText();
         Word result = DictionaryManagement.lookUp(searchedWord);
         if (result != null){
             LookUpHistory.addIntoList(result);
-            setEng(result.getEnglishText() + "\n" + result.getPronunciation());
-            setVietnam(result.getVietnamText());
+            showWordContent(result);
         }
         else {
-            setEng(searchedWord);
-            setVietnam("Khong co tu nay trong tu dien");
+            setEnglishLabel(searchedWord);
+            setVietnamText("Không có từ này trong từ điển.");
         }
     }
 
     @FXML
     void lookUpWordByEnter(KeyEvent event) throws IOException {
-        if(event.getCode() == KeyCode.ENTER || event.getCode() == KeyCode.ESCAPE) {
-            searchedWord = input.getText();
-            Word result = DictionaryManagement.lookUp(searchedWord);
-            if (result != null){
-                LookUpHistory.addIntoList(result);
-                setEng(result.getEnglishText() + "\n" + result.getPronunciation());
-                setVietnam(result.getVietnamText());
-            }
-            else {
-                setEng(searchedWord);
-                setVietnam("Khong co tu nay trong tu dien");
-            }
+        if(event.getCode() == KeyCode.ENTER) {
+            lookUpWord();
         }
     }
 
@@ -73,25 +65,61 @@ public class translateAWord {
         DictionaryApplication.setRoot("Home");
     }
 
-    public  void setVietnam(String viet) {
-        vietnam.setText(viet);
+    @FXML
+    private void getClickedWord() {
+        suggestedWordListView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+        String word = (String) suggestedWordListView.getSelectionModel().getSelectedItem();
+        input.setText(word);
+        suggestedWordListView.getSelectionModel().clearSelection();
+        hideSuggestedListView();
     }
 
-    public  void setEng(String eng) {
-        english.setText(eng);
+    @FXML
+    private void addSuggestedWords() {
+        String text = input.getText();
+        List<String> suggestedWords = DictionaryManagement.getSuggestedWords(text);
+        if (!suggestedWords.isEmpty()) {
+            showSuggestedListView();
+            suggestedWordListView.getItems().clear();
+            suggestedWordListView.getItems().addAll(suggestedWords);
+        } else {
+            hideSuggestedListView();
+        }
+        suggestedWords.clear();
+    }
+    @FXML
+    private void hideSuggestedListView() {
+        suggestedWordListView.setVisible(false);
+//        suggestedWordListView.setDisable(true);
+    }
+    @FXML
+    private void showSuggestedListView() {
+        suggestedWordListView.setVisible(true);
+//        suggestedWordListView.setDisable(false);
     }
 
-    public void showWordContentFromHomePage(Word word) {
-        setEng(word.getEnglishText() + "\n" +word.getPronunciation());
-        setVietnam(word.getVietnamText());
+    private void setVietnamText(String viet) {
+        vietnamText.setText(viet);
+    }
+
+    private void setEnglishLabel(String eng) {
+        englishLabel.setText(eng);
+    }
+
+    private void setPronunciationLabel(String pronunciation) { pronunciationLabel.setText(pronunciation); }
+
+    private void showWordContent(Word word) {
+        setEnglishLabel(word.getEnglishText());
+        setPronunciationLabel(word.getPronunciation());
+        setVietnamText(word.getVietnamText());
     }
 
     @FXML
     void initialize() {
-        assert english != null : "fx:id=\"english\" was not injected: check your FXML file 'translateAWord.fxml'.";
+        assert englishLabel != null : "fx:id=\"englishLabel\" was not injected: check your FXML file 'translateAWord.fxml'.";
         assert btnBack != null : "fx:id=\"btnBack\" was not injected: check your FXML file 'translateAWord.fxml'.";
-        assert vietnam != null : "fx:id=\"vietnam\" was not injected: check your FXML file 'translateAWord.fxml'.";
+        assert vietnamText != null : "fx:id=\"vietnamText\" was not injected: check your FXML file 'translateAWord.fxml'.";
         input.setText(Home.getResult().getEnglishText());
-        showWordContentFromHomePage(Home.getResult());
+        showWordContent(Home.getResult());
     }
 }

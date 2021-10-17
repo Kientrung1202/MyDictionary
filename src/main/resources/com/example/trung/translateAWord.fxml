@@ -32,8 +32,11 @@
   OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 -->
 
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.effect.ColorAdjust?>
 <?import javafx.scene.image.Image?>
@@ -43,42 +46,14 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="680.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.trung.translateAWord">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#hideSuggestedListView" prefHeight="680.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.trung.translateAWord">
    <bottom>
-      <Label alignment="TOP_RIGHT" prefHeight="18.0" prefWidth="811.0" text="\@3 chàng lính ngự lâm" textFill="#4ab140" BorderPane.alignment="CENTER">
+      <Label alignment="TOP_RIGHT" prefHeight="28.0" prefWidth="588.0" text="\@3 chàng lính ngự lâm" textFill="#4ab140" BorderPane.alignment="CENTER">
          <font>
             <Font name="System Bold" size="19.0" />
          </font>
       </Label>
    </bottom>
-   <center>
-      <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-         <children>
-            <Label fx:id="english" alignment="CENTER" layoutX="2.0" layoutY="34.0" prefHeight="122.0" prefWidth="600.0" textAlignment="CENTER" wrapText="true">
-               <font>
-                  <Font name="System Italic" size="18.0" />
-               </font>
-            </Label>
-            <Button layoutX="32.0" layoutY="59.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="40.0" text="Button" />
-            <ImageView fx:id="btnBack" fitHeight="40.0" fitWidth="40.0" layoutX="32.0" layoutY="60.0" onMouseClicked="#back" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../../images/back.png" />
-               </image>
-            </ImageView>
-            <Label fx:id="vietnam" alignment="CENTER" layoutX="2.0" layoutY="163.0" prefHeight="373.0" prefWidth="600.0" wrapText="true">
-               <font>
-                  <Font name="System Italic" size="18.0" />
-               </font></Label>
-            <Line endX="293.800048828125" layoutX="309.0" layoutY="163.0" startX="-309.0" />
-            <Button layoutX="490.0" layoutY="67.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="41.0" />
-            <ImageView fx:id="sound" fitHeight="40.0" fitWidth="40.0" layoutX="491.0" layoutY="72.0" onMouseClicked="#soundAWord" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../../images/loa.jpg" />
-               </image>
-            </ImageView>
-         </children>
-      </AnchorPane>
-   </center>
    <top>
       <AnchorPane prefHeight="166.0" prefWidth="200.0" style="-fx-background-color: #ab123456;" BorderPane.alignment="CENTER">
          <children>
@@ -90,9 +65,60 @@
                   <ColorAdjust brightness="0.1" contrast="-0.32" />
                </effect>
             </Label>
-            <TextField fx:id="input" layoutX="151.0" layoutY="107.0" onKeyReleased="#lookUpWordByEnter" style="-fx-background-radius: 10px;" AnchorPane.bottomAnchor="18.5" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="100.0" AnchorPane.topAnchor="113.0" />
-            <Button fx:id="search" layoutX="526.0" layoutY="118.0" mnemonicParsing="false" onAction="#lookUpWord" style="-fx-background-radius: 10px;" text="search" textAlignment="CENTER" AnchorPane.bottomAnchor="17.5" AnchorPane.leftAnchor="520.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="113.0" />
+            <TextField fx:id="input" layoutX="151.0" layoutY="107.0" onKeyPressed="#lookUpWordByEnter" onKeyReleased="#addSuggestedWords" onMouseClicked="#addSuggestedWords" promptText="Nhập từ cần tìm" style="-fx-background-radius: 10px;" AnchorPane.bottomAnchor="18.5" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="100.0" AnchorPane.topAnchor="113.0">
+               <font>
+                  <Font size="14.0" />
+               </font></TextField>
+            <Button fx:id="search" layoutX="510.0" layoutY="113.0" mnemonicParsing="false" onAction="#lookUpWord" prefHeight="35.0" prefWidth="76.0" style="-fx-background-radius: 10px;" text="Tra cứu" textAlignment="CENTER" AnchorPane.bottomAnchor="18.0" AnchorPane.leftAnchor="510.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="113.0">
+               <font>
+                  <Font size="14.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></Button>
          </children>
       </AnchorPane>
    </top>
+   <right>
+      <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label fx:id="englishLabel" alignment="CENTER" layoutX="167.0" layoutY="39.0" prefHeight="57.0" prefWidth="270.0" textAlignment="CENTER" wrapText="true">
+               <font>
+                  <Font name="System Italic" size="18.0" />
+               </font>
+            </Label>
+            <ImageView fx:id="btnBack" fitHeight="40.0" fitWidth="40.0" layoutX="32.0" layoutY="60.0" onMouseClicked="#back" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../images/back.png" />
+               </image>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </ImageView>
+            <Line endX="293.800048828125" layoutX="309.0" layoutY="144.0" startX="-309.0" />
+            <Button layoutX="508.0" layoutY="57.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="38.0">
+               <graphic>
+                  <ImageView fx:id="sound" fitHeight="37.0" fitWidth="37.0" pickOnBounds="true">
+                     <image>
+                        <Image url="@../../../images/loa.jpg" />
+                     </image>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </ImageView>
+               </graphic></Button>
+            <TextArea fx:id="vietnamText" editable="false" layoutX="42.0" layoutY="146.0" prefHeight="340.0" prefWidth="519.0" wrapText="true">
+               <font>
+                  <Font name="Calibri" size="19.0" />
+               </font>
+            </TextArea>
+            <ListView fx:id="suggestedWordListView" layoutX="34.0" layoutY="-18.0" onMouseClicked="#getClickedWord" prefHeight="99.0" prefWidth="470.0" style="-fx-background-radius: 10px;" visible="false" />
+            <Label fx:id="pronunciationLabel" alignment="CENTER" layoutX="176.0" layoutY="96.0" prefHeight="40.0" prefWidth="250.0" textAlignment="CENTER" wrapText="true">
+               <font>
+                  <Font name="System Italic" size="18.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+   </right>
 </BorderPane>

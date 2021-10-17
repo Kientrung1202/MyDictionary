@@ -2,12 +2,10 @@ package com.example.trung;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.ListView;
-import javafx.scene.control.SelectionMode;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.BorderPane;
 
 import java.io.IOException;
 import java.net.URL;
@@ -21,6 +19,10 @@ public class Home {
         return result;
     }
 
+    public static void setResult(Word word) { //used for reopening word content from look up history.
+        result = word;
+    }
+
     @FXML
     public ListView suggestedWordListView;
 
@@ -32,6 +34,9 @@ public class Home {
 
     @FXML
     private TextField lookupField;
+
+    @FXML
+    private Label alertLabel;
 
     @FXML
     private Button searchingButton;
@@ -51,37 +56,42 @@ public class Home {
     @FXML
     private Button wordRemovingButton;
 
+    /**
+     * Open translation page
+     * @throws IOException
+     */
     @FXML
-    void searchAWord(ActionEvent event) throws IOException {
+    void searchAWord() throws IOException {
         String enteredWord = lookupField.getText();
-        if (enteredWord.length() > 0) {
+        if (!enteredWord.isBlank()) {
             result = DictionaryManagement.lookUp(enteredWord);
             if (result != null) {
                 LookUpHistory.addIntoList(result);
             } else {
-                result = new Word(enteredWord, "", "Khong co tu nay trong tu dien");
+                result = new Word(enteredWord, "", "Không có từ này trong từ điển.");
             }
             DictionaryApplication.setRoot("translateAWord");
         }
-    }
-
-    @FXML
-    void searchAWordByEnter(KeyEvent event) throws IOException {
-        if (event.getCode() == KeyCode.ENTER) {
-            String enteredWord = lookupField.getText();
-            if (enteredWord.length() > 0) {
-                result = DictionaryManagement.lookUp(enteredWord);
-                if (result != null) {
-                    LookUpHistory.addIntoList(result);
-                } else {
-                    result = new Word(enteredWord, "", "Khong co tu nay trong tu dien");
-                }
-
-                DictionaryApplication.setRoot("translateAWord");
-            }
+        else {
+            alertLabel.setText("Chưa nhập từ cần tìm.");
         }
     }
 
+    /**
+     * Open translation page
+     * @param event
+     * @throws IOException
+     */
+    @FXML
+    void searchAWordByEnter(KeyEvent event) throws IOException {
+        if (event.getCode() == KeyCode.ENTER) {
+            searchAWord();
+        }
+    }
+
+    /**
+     * ListView
+     */
     @FXML
     private void getClickedWord() {
         suggestedWordListView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
@@ -91,6 +101,9 @@ public class Home {
         hideSuggestedListView();
     }
 
+    /**
+     * ListView
+     */
     @FXML
     private void addSuggestedWords() {
         String text = lookupField.getText();
@@ -104,11 +117,19 @@ public class Home {
         }
         suggestedWords.clear();
     }
+
+    /**
+     * Hide ListView
+     */
     @FXML
     private void hideSuggestedListView() {
         suggestedWordListView.setVisible(false);
         suggestedWordListView.setDisable(true);
     }
+
+    /**
+     * Show ListView
+     */
     @FXML
     private void showSuggestedListView() {
         suggestedWordListView.setVisible(true);

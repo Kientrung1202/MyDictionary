@@ -5,7 +5,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
@@ -35,9 +34,9 @@ public class RemoveWord {
 
     @FXML
     void initialize() {
-        assert removeButton != null : "fx:id=\"removeButton\" was not injected: check your FXML file 'dichDoanVan.fxml'.";
-        assert wordMeaningField != null : "fx:id=\"wordMeaningField\" was not injected: check your FXML file 'dichDoanVan.fxml'.";
-        assert wordField != null : "fx:id=\"wordField\" was not injected: check your FXML file 'dichDoanVan.fxml'.";
+        assert removeButton != null : "fx:id=\"removeButton\" was not injected: check your FXML file 'RemoveWord.fxml'.";
+        assert wordMeaningField != null : "fx:id=\"wordMeaningField\" was not injected: check your FXML file 'RemoveWord.fxml'.";
+        assert wordField != null : "fx:id=\"wordField\" was not injected: check your FXML file 'RemoveWord.fxml'.";
     }
 
     @FXML
@@ -49,6 +48,7 @@ public class RemoveWord {
     void process() throws IOException {
         String input = wordField.getText();
         if (DictionaryManagement.lookUp(input) == null) {
+            notification.setTextFill(Color.DARKSLATEGREY);
             notification.setText("Không có từ này trong từ điển.");
             return;
         }

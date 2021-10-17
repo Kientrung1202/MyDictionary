@@ -6,8 +6,7 @@ import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
-import java.util.Map;
-import java.util.LinkedHashMap;
+import java.util.*;
 
 //import com.sun.speech.freetts.Voice;
 //import com.sun.speech.freetts.VoiceManager;
@@ -45,10 +44,16 @@ public class DictionaryManagement {
         wordListInitialize();
     }
 
+    /**
+     *
+     * @param engWord String.
+     * @return
+     */
     public static Word lookUp(String engWord) {
         if (engWord.isBlank()) {
             return null;
         }
+        engWord = removeExtraSpaces(engWord);
         engWord = engWord.toLowerCase();
         String capitalizedEngWord = getCapitalizedWord(engWord);
         if (!wordList.containsKey(engWord) && !wordList.containsKey(capitalizedEngWord)) {
@@ -63,6 +68,12 @@ public class DictionaryManagement {
         return result;
     }
 
+    /**
+     * Add new word
+     * @param newWord
+     * @return true if adding successfully.
+     * @throws IOException
+     */
     public static boolean addAWord(Word newWord) throws IOException {
         if (newWord.getEnglishText().isBlank()) {
             return false;
@@ -85,26 +96,41 @@ public class DictionaryManagement {
         return false;
     }
 
-    //true when editing word successfully
-    public static boolean editWord(String replacedWord, String newWord) throws IOException {
-        Word result = lookUp(replacedWord);
+    /**
+     * Edit/Replace specified word with another word.
+     * @param replacedWord
+     * @param newWord
+     * @return true when the word is edited successfully
+     * @throws IOException
+     */
+    public static boolean editWord(Word replacedWord, Word newWord) throws IOException {
+        String replacedWordString = replacedWord.getEnglishText();
+        String newWordString = newWord.getEnglishText();
+
+        Word result = lookUp(replacedWordString);
         if (result == null) {
-            System.out.println("'" + replacedWord + "' do not exist in dictionary.");
             return false;
         }
-        if (replacedWord.equals(newWord)) {
+        if (replacedWordString.equals(newWordString)) {
             return false;
         }
 
-        String currentPronunciation = wordList.get(replacedWord).getPronunciation();
-        String currentMeaning = wordList.get(replacedWord).getVietnamText();
+        String pronunciation = newWord.getPronunciation();
+        String meaning = newWord.getVietnamText();
+
         wordList.remove(replacedWord);
-        wordList.put(newWord, new Word(newWord, currentPronunciation, currentMeaning));
+        wordList.put(newWordString, new Word(newWordString, pronunciation, meaning));
 
         writeToFile();
         return true;
     }
 
+    /**
+     *  Remove specified word.
+     * @param word
+     * @return true of false
+     * @throws IOException
+     */
     public static boolean removeWord(String word) throws IOException {
         if (!wordList.containsKey(word)) {
             return false;
@@ -114,6 +140,36 @@ public class DictionaryManagement {
         return true;
     }
 
+    /**
+     * Get suggested words list.
+     * @param text
+     * @return list of ArrayList type.
+     */
+    public static ArrayList<String> getSuggestedWords(String text) {
+        text = text.toLowerCase(Locale.ROOT);
+        LinkedHashSet<String> tempSet = new LinkedHashSet<>();
+        ArrayList<String> list = new ArrayList<>(); //return
+        final int SIZE_LIMIT = 15;
+        for (int index = 0, count = 0; index < text.length() && count != SIZE_LIMIT; index++) {
+            //consider both lowercase word and capitalized word.
+            String subText = text.substring(0, text.length() - index);
+            String capSubText = getCapitalizedWord(subText);
+            for(String word : wordList.keySet()) {
+                if (count == SIZE_LIMIT) {
+                    list.addAll(tempSet);
+                    return list;
+                }
+                if (word.startsWith(subText) || word.startsWith(capSubText)) {
+                    count++;
+                    tempSet.add(word + " " + wordList.get(word).getPronunciation());
+                }
+            }
+        }
+        list.addAll(tempSet);
+        return list;
+    }
+
+    //get from the first line that may contain pronunciation part.
     private static String getPronunciation(final String firstLine) {
         String[] arr = firstLine.split(" /");
         if (arr.length > 1) {
@@ -122,10 +178,11 @@ public class DictionaryManagement {
         return "";
     }
 
-    private static String getWord(final String firstLine) { //only used for the line that contains main Word.
+    //only used for the line that contains main Word.
+    private static String getWord(final String firstLine) {
         String[] arr = firstLine.split(" /");
         String result = arr[0];
-        if (result.endsWith(" ")) { //don't understand why the argument 'line' sometimes inserts " " in the end of the string??
+        if (result.endsWith(" ")) { //the argument 'line' sometimes inserts " " in the end of the string??
             result = result.substring(0, result.length() - 1);
         }
         if (firstLine.charAt(1) == '@') {
@@ -151,13 +208,41 @@ public class DictionaryManagement {
         writer.close();
     }
 
-    private  static String getCapitalizedWord(String word) {
+    private static String getCapitalizedWord(String word) {
         char tmp = word.charAt(0);
         if (tmp >= 'A' && tmp <= 'Z') return word;
         Character oldChar = tmp;
         tmp -= 32;
         Character newChar = tmp;
         return word.replaceFirst(oldChar.toString(), newChar.toString());
+    }
+
+    private static String removeExtraSpaces(String text) {
+        //find the first letter of the word and remove all the spaces before it(leading space).
+        String[] tmpArr = text.split(" ");
+        ArrayList<String> strArray = new ArrayList<>(); //Create a string array whose all elements are not blank
+        for (int i = 0; i < tmpArr.length; i++) {
+            if (!tmpArr[i].isBlank()) {
+                strArray.add(tmpArr[i].strip()); //and add every stripped sequence.
+            }
+        }
+
+        StringBuilder result = new StringBuilder("");
+
+        for (int i = 0; i < strArray.size(); i++) {
+            if (i == strArray.size() - 1) {
+                result.append(strArray.get(i));
+            }
+            else { //check next sequence, if it satisfies the following cond then not appending a whitespace behind.
+                String nextSequence = strArray.get(i + 1);
+                if (nextSequence.equals(",") || nextSequence.equals(".")
+                        || nextSequence.equals(";") || nextSequence.equals("?")) {
+                    result.append(strArray.get(i));
+                }
+                else result.append(strArray.get(i) + " ");
+            }
+        }
+        return result.toString();
     }
 
 //    public static void speakVoiceEn(String text) {

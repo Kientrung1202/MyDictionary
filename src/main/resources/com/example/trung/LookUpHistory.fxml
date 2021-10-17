@@ -32,6 +32,7 @@
   OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 -->
 
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TableColumn?>
@@ -56,9 +57,9 @@
          <children>
             <ScrollPane layoutY="12.0" prefHeight="534.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="12.0">
                <content>
-                  <TableView fx:id="tbview" maxHeight="561.0" maxWidth="586.0" prefHeight="561.0" prefWidth="586.0">
+                  <TableView fx:id="tbview" maxHeight="561.0" maxWidth="586.0" onMouseClicked="#getClickedWord" prefHeight="561.0" prefWidth="586.0">
                     <columns>
-                      <TableColumn fx:id="english" maxWidth="110.3999542593956" prefWidth="110.3999542593956" resizable="false" text="Tiếng Anh" />
+                      <TableColumn fx:id="english" editable="false" maxWidth="110.3999542593956" prefWidth="110.3999542593956" resizable="false" text="Tiếng Anh" />
                         <TableColumn fx:id="pronunciation" maxWidth="111.0" prefWidth="111.0" resizable="false" text="Phát âm" />
                         <TableColumn fx:id="partsOfSpeech" maxWidth="112.0" minWidth="0.0" prefWidth="112.0" resizable="false" text="Từ loại" />
                         <TableColumn fx:id="vietnamese" maxWidth="251.0" prefWidth="251.0" resizable="false" text="Nghĩa của từ" />
@@ -79,6 +80,9 @@
                <image>
                   <Image url="@../../../images/back.png" />
                </image>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
             </ImageView>
             <Label alignment="CENTER" layoutX="163.0" layoutY="16.0" prefHeight="46.0" prefWidth="274.0" text="Các từ vừa tìm" textAlignment="CENTER" textFill="#2fb16a">
                <font>

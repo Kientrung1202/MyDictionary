@@ -1,15 +1,13 @@
 package com.example.trung;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 
 public class RemovalWarningBox {
-    String removedWord;
-
     @FXML
     Button cancelButton;
 
@@ -17,7 +15,16 @@ public class RemovalWarningBox {
     Button acceptButton;
 
     @FXML
-    Button turnToEditWordButton;
+    Button closeButton;
+
+    @FXML
+    Label notification;
+
+    @FXML
+    Label warningLabel;
+
+    @FXML
+    Label questionLabel;
 
     @FXML
     void closeStage() {
@@ -29,13 +36,22 @@ public class RemovalWarningBox {
     void processAcceptButton() throws IOException {
         String input = RemoveWord.getRemovedWord();
         DictionaryManagement.removeWord(input);
-        Stage stage = (Stage)acceptButton.getScene().getWindow();
-        stage.close();
+        LookUpHistory.removeWord(input);
+        setNotification();
     }
 
     @FXML
-    void processEditWordButton() {
-        System.out.println("edit word");
+    void setNotification() {
+        cancelButton.setVisible(false);
+        cancelButton.setDisable(true);
+        acceptButton.setVisible(false);
+        acceptButton.setDisable(true);
+        warningLabel.setVisible(false);
+        questionLabel.setVisible(false);
+        //show new content instead
+        notification.setVisible(true);
+        closeButton.setDisable(false);
+        closeButton.setVisible(true);
     }
 
 }

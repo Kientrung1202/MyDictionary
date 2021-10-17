@@ -5,10 +5,9 @@ module com.example.trung {
     requires org.controlsfx.controls;
     requires org.kordamp.bootstrapfx.core;
     requires java.desktop;
-    requires org.json;
+//    requires org.json;
     requires java.net.http;
     requires freetts;
-    requires java.desktop;
 //    requires com.google.api.services.sourcerepo;
 
     opens com.example.trung to javafx.fxml;

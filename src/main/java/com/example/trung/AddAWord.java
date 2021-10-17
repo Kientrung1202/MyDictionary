@@ -66,11 +66,12 @@ public class AddAWord {
     }
 
     @FXML
-    void clickOnPageHandle() {
-
+    void clickOnPage() {
+        //Do nothing
     }
+
     @FXML
     void initialize() {
-        assert add != null : "fx:id=\"add\" was not injected: check your FXML file 'Home.fxml'.";
+        assert add != null : "fx:id=\"add\" was not injected: check your FXML file 'AddAWord.fxml'.";
     }
 }

@@ -1,6 +1,7 @@
 package com.example.trung;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -37,10 +38,10 @@ public class dichDoanVan {
     private TextArea input;
 
     @FXML
-    private TextArea output1;
+    private TextArea output;
 
     @FXML
-    private Label output;
+    private Label output1;
 
     @FXML
     private ImageView searchAPra;
@@ -68,18 +69,17 @@ public class dichDoanVan {
     }
 
     @FXML
-    void speakInput(MouseEvent event) {
+    void soundInput(MouseEvent event) {
 //        if(EnToVi) {
 //            DictionaryManagement.speakVoiceEn(input.getText());
 //        }
     }
 
     @FXML
-    void speakOutput(MouseEvent event) {
+    void soundOutput(MouseEvent event) {
 
     }
 
-    //back
     @FXML
     void back(MouseEvent event) throws IOException {
         DictionaryApplication.setRoot("Home");

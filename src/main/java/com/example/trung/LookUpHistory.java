@@ -3,6 +3,7 @@ package com.example.trung;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -19,11 +20,17 @@ import java.net.URL;
 import java.util.*;
 
 public class LookUpHistory {
-    private static final File logFile = new File("MyDictionary/src/main/resources/data/lookuplog.txt");
+    private static final File logFile = new File("src/main/resources/data/lookuplog.txt");
 
     private static final int maxCapacity = 20;
 
     private static Set<String> wordSet = new LinkedHashSet<>(maxCapacity);
+
+    private static String selectedWord;
+
+    public static String getSelectedWord() {
+        return selectedWord;
+    }
 
     @FXML
     private ResourceBundle resources;
@@ -114,6 +121,15 @@ public class LookUpHistory {
         reader.close();
     }
 
+    @FXML
+    void getClickedWord() throws IOException {
+        tbview.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+        Word selectedWord = tbview.getSelectionModel().getSelectedItem();
+        tbview.getSelectionModel().clearSelection();
+        Home.setResult(selectedWord);
+        DictionaryApplication.setRoot("translateAWord");
+    }
+
     public static void editWord(String replacedWord, String newWord) throws IOException {
         //look up the word, if it exists then change it and return true. Otherwise, return false.
         if (!wordSet.contains(replacedWord)) {
@@ -127,6 +143,12 @@ public class LookUpHistory {
         wordSet.addAll(wordArray);
 
         writeToFile();
+    }
+
+    public static void removeWord(String word) throws IOException {
+        if (wordSet.remove(word)) {
+            writeToFile();
+        }
     }
 
     private static void writeToFile() throws IOException {

@@ -11,6 +11,7 @@ public class Word {
         this.englishText = englishText;
         this.pronunciation = pronunciation;
         this.vietnamText = vietnamText;
+        setPartsOfSpeech();
     }
 
     public String getEnglishText(){

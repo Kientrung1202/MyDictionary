@@ -14,7 +14,7 @@ import java.io.IOException;
  */
 public class DictionaryApplication extends Application {
     private static Scene scene;
-    // de tao them scene con
+
     @Override
     public void start(Stage stage) throws IOException {
         scene = new Scene(loadFxml("Home"));
@@ -25,7 +25,7 @@ public class DictionaryApplication extends Application {
     }
 
     // Open a new scene.
-    static void setRoot(String name) throws IOException {
+    public static void setRoot(String name) throws IOException {
         scene.setRoot(loadFxml(name));
     }
 
