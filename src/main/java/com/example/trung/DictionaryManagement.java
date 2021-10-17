@@ -13,7 +13,7 @@ import java.util.LinkedHashMap;
 //import com.sun.speech.freetts.VoiceManager;
 
 public class DictionaryManagement {
-    private static final String path = "MyDictionary/src/main/resources/data/raw dictionary(en-vi).txt";
+    private static final String path = "src/main/resources/data/raw dictionary(en-vi).txt";
 
     private static Map<String, Word> wordList = new LinkedHashMap<>(104000);
 
@@ -46,7 +46,7 @@ public class DictionaryManagement {
     }
 
     public static Word lookUp(String engWord) {
-        if (engWord.length() == 0) {
+        if (engWord.isBlank()) {
             return null;
         }
         engWord = engWord.toLowerCase();
@@ -64,8 +64,11 @@ public class DictionaryManagement {
     }
 
     public static boolean addAWord(Word newWord) throws IOException {
+        if (newWord.getEnglishText().isBlank()) {
+            return false;
+        }
         boolean wordExist = wordList.containsKey(newWord.getEnglishText());
-        //May supplement pronunciation adding feature(optional).
+
         if (!wordExist && !newWord.getVietnamText().equals("") && !newWord.getEnglishText().equals("")) {
             String engWord = newWord.getEnglishText();
             String pronunciation = newWord.getPronunciation();
@@ -73,7 +76,7 @@ public class DictionaryManagement {
             newWord.setPartsOfSpeech();
 
             wordList.put(engWord, new Word(engWord, pronunciation, meaning));
-            String wordToAppend = engWord + " " + pronunciation + "\n" + meaning;
+            String wordToAppend = "@" + engWord + " " + pronunciation + "\n" + meaning;
             Files.write(Paths.get(path), //append the word just added
                     wordToAppend.getBytes(),
                     StandardOpenOption.APPEND);
@@ -104,7 +107,6 @@ public class DictionaryManagement {
 
     public static boolean removeWord(String word) throws IOException {
         if (!wordList.containsKey(word)) {
-            //notice about removing failure
             return false;
         }
         wordList.remove(word);

@@ -1,8 +1,6 @@
 package com.example.trung;
 
-
 import javafx.fxml.FXML;
-import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -14,8 +12,6 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.ResourceBundle;
-
-
 
 public class dichDoanVan {
     private static boolean EnToVi = true;
@@ -39,6 +35,9 @@ public class dichDoanVan {
 
     @FXML
     private TextArea input;
+
+    @FXML
+    private TextArea output1;
 
     @FXML
     private Label output;
@@ -121,9 +120,11 @@ public class dichDoanVan {
 
     @FXML
     void initialize() {
-    }
+        assert btnInput != null : "fx:id=\"btnInput\" was not injected: check your FXML file 'dichDoanVan.fxml'.";
+        assert input != null : "fx:id=\"input\" was not injected: check your FXML file 'dichDoanVan.fxml'.";
+        assert btnOutput != null : "fx:id=\"btnOutput\" was not injected: check your FXML file 'dichDoanVan.fxml'.";
+        assert output != null : "fx:id=\"output\" was not injected: check your FXML file 'dichDoanVan.fxml'.";
+        assert btnback != null : "fx:id=\"btnback\" was not injected: check your FXML file 'dichDoanVan.fxml'.";
 
-    void getTranslatedString() {
-        if (input.getText() != null) output.setText("Da duoc dich");
     }
 }
