@@ -22,21 +22,9 @@ import java.util.*;
 public class LookUpHistory {
     private static final File logFile = new File("src/main/resources/data/lookuplog.txt");
 
-    private static final int maxCapacity = 20;
+    private static final int maxCapacity = 50;
 
     private static Set<String> wordSet = new LinkedHashSet<>(maxCapacity);
-
-    private static String selectedWord;
-
-    public static String getSelectedWord() {
-        return selectedWord;
-    }
-
-    @FXML
-    private ResourceBundle resources;
-
-    @FXML
-    private URL location;
 
     @FXML
     private TableView<Word> tbview;
@@ -74,6 +62,7 @@ public class LookUpHistory {
 
         ObservableList<Word> List = getObservableList();
         tbview.setItems(List);
+
     }
 
     public ObservableList<Word> getObservableList() { //reverse the word wordSet here to get the desired order by latest time

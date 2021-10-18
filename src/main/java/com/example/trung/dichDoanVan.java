@@ -1,13 +1,13 @@
 package com.example.trung;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.ResourceBundle;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
@@ -16,15 +16,25 @@ import java.net.URLEncoder;
 import org.json.JSONArray;
 
 public class dichDoanVan {
+    private VoiceManagement voiceManagement;
+
+    private final String ENGLISH = "en";
+    private final String VIETNAMESE = "vi";
+
+    private String fromLanguage = ENGLISH;
+    private String toLanguage = VIETNAMESE;
 
     @FXML
-    private ResourceBundle resources;
+    private Button engSpeakButton;
 
     @FXML
-    private URL location;
+    private Button backButton;
 
     @FXML
-    private ImageView btnInput;
+    private Button translateButton;
+
+    @FXML
+    private Button swapButton;
 
     @FXML
     private TextArea input;
@@ -33,20 +43,17 @@ public class dichDoanVan {
     private TextArea output;
 
     @FXML
-    private ImageView btnOutput;
+    private Label originLanguage;
 
     @FXML
-    private ImageView btnback;
-
-    @FXML
-    private Button translateButton;
+    private Label destLanguage;
 
     @FXML
     void process() throws Exception {
         String translatedText = input.getText();
         if (translatedText.isBlank()) return;
-        String result = callURLAndParseResult("en", "vi", translatedText);
-        output.setText(result);
+//        String result = callURLAndParseResult("en", "vi", translatedText);
+        output.setText(getResult(translatedText, fromLanguage, toLanguage));
     }
 
     @FXML
@@ -55,22 +62,21 @@ public class dichDoanVan {
     }
 
     @FXML
-    void soundInput(MouseEvent event) {
-
-    }
-
-    @FXML
-    void soundOutput(MouseEvent event) {
-
-    }
-
-    @FXML
     void initialize() {
-        assert btnInput != null : "fx:id=\"btnInput\" was not injected: check your FXML file 'dichDoanVan.fxml'.";
+        assert engSpeakButton != null : "fx:id=\"engSpeakButton\" was not injected: check your FXML file 'dichDoanVan.fxml'.";
         assert input != null : "fx:id=\"input\" was not injected: check your FXML file 'dichDoanVan.fxml'.";
-        assert btnOutput != null : "fx:id=\"btnOutput\" was not injected: check your FXML file 'dichDoanVan.fxml'.";
         assert output != null : "fx:id=\"output\" was not injected: check your FXML file 'dichDoanVan.fxml'.";
-        assert btnback != null : "fx:id=\"btnback\" was not injected: check your FXML file 'dichDoanVan.fxml'.";
+        assert backButton != null : "fx:id=\"backButton\" was not injected: check your FXML file 'dichDoanVan.fxml'.";
+        assert translateButton != null : "fx:id=\"translateButton\" was not injected: check your FXML file 'dichDoanVan.fxml'.";
+        voiceManagement = new VoiceManagement();
+    }
+
+    @FXML
+    private void getVoice() {
+        String text = null;
+        if (fromLanguage.equals(ENGLISH)) text = input.getText();
+        else text = output.getText();
+        voiceManagement.speak(text);
     }
 
     private String callURLAndParseResult(String langFrom, String langTo, String word) throws Exception {
@@ -104,5 +110,35 @@ public class dichDoanVan {
         JSONArray jsonArray3 = (JSONArray) jsonArray2.get(0);
 
         return jsonArray3.get(0).toString();
+    }
+
+    private String getResult(String translatedText, String fromLang, String toLang) throws Exception {
+        translatedText = translatedText.strip();
+        String[] statementsArray = translatedText.split("\\. ");
+        StringBuilder result = new StringBuilder("");
+
+        for (int i = 0; i < statementsArray.length; i++) {
+            if (i == statementsArray.length - 1) {
+                result.append(callURLAndParseResult(fromLang, toLang, statementsArray[i]));
+            }
+            else result.append(callURLAndParseResult(fromLang, toLang, statementsArray[i]) + ". ");
+        }
+
+        return result.toString();
+    }
+
+    @FXML
+    private void processSwap() {
+        String tmp1 = originLanguage.getText();
+        String tmp2 = destLanguage.getText();
+        originLanguage.setText(tmp2);
+        destLanguage.setText(tmp1);
+
+        String tmp3 = fromLanguage;
+        fromLanguage = toLanguage;
+        toLanguage = tmp3;
+
+        if (toLanguage.equals(ENGLISH)) engSpeakButton.setLayoutY(390);
+        else engSpeakButton.setLayoutY(128);
     }
 }

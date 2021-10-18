@@ -96,17 +96,20 @@
                </cursor>
             </ImageView>
             <Line endX="293.800048828125" layoutX="309.0" layoutY="144.0" startX="-309.0" />
-            <Button layoutX="508.0" layoutY="57.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="38.0">
+            <Button fx:id="speakButton" layoutX="513.0" layoutY="57.0" mnemonicParsing="false" onAction="#getVoice" prefHeight="41.0" prefWidth="37.0">
                <graphic>
-                  <ImageView fx:id="sound" fitHeight="37.0" fitWidth="37.0" pickOnBounds="true">
+                  <ImageView fx:id="sound" fitHeight="34.0" fitWidth="36.0" pickOnBounds="true">
                      <image>
-                        <Image url="@../../../images/loa.jpg" />
+                        <Image url="@../../../images/speaker1-removebg-preview.png" />
                      </image>
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </ImageView>
-               </graphic></Button>
+               </graphic>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></Button>
             <TextArea fx:id="vietnamText" editable="false" layoutX="42.0" layoutY="146.0" prefHeight="340.0" prefWidth="519.0" wrapText="true">
                <font>
                   <Font name="Calibri" size="19.0" />

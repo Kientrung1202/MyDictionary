@@ -35,72 +35,81 @@
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#clickOnPage" prefHeight="680.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.trung.AddAWord">
-   <children>
-      <TabPane prefHeight="680.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" />
-      <Label alignment="CENTER" layoutX="237.0" layoutY="6.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="106.0" prefWidth="600.0" style="-fx-background-color: #ab123456;" text="Thêm từ mới vào từ điển" textAlignment="CENTER" textFill="#2fb16a" AnchorPane.bottomAnchor="574.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-         <font>
-            <Font name="System Bold" size="22.0" />
-         </font>
-      </Label>
-      <Label alignment="CENTER" layoutX="27.0" layoutY="138.0" prefHeight="39.0" prefWidth="134.0" text="Tiếng Anh:" textAlignment="CENTER" textFill="#2b7486" AnchorPane.leftAnchor="27.0" AnchorPane.rightAnchor="439.0">
-         <font>
-            <Font name="Calibri" size="22.0" />
-         </font>
-      </Label>
-      <TextField fx:id="englishField" layoutX="172.0" layoutY="139.0" prefHeight="37.0" prefWidth="237.0" promptText="Nhập từ mới(bắt buộc)" AnchorPane.leftAnchor="172.0" AnchorPane.rightAnchor="191.0">
-         <font>
-            <Font name="Arial" size="20.0" />
-         </font>
-      </TextField>
-      <Label alignment="CENTER" layoutX="-2.0" layoutY="275.0" prefHeight="30.0" prefWidth="192.0" text="Nghĩa(tiếng Việt):" textFill="#2b7486" AnchorPane.leftAnchor="-2.0" AnchorPane.rightAnchor="410.0">
-         <font>
-            <Font name="Calibri" size="22.0" />
-         </font>
-      </Label>
-      <Button fx:id="add" layoutX="256.0" layoutY="546.0" mnemonicParsing="false" onAction="#addAWord" prefHeight="18.0" prefWidth="88.0" text="Thêm" AnchorPane.leftAnchor="256.0" AnchorPane.rightAnchor="256.0">
-         <font>
-            <Font size="17.0" />
-         </font>
-         <cursor>
-            <Cursor fx:constant="HAND" />
-         </cursor>
-      </Button>
-      <ImageView fx:id="back" fitHeight="40.0" fitWidth="40.0" layoutX="27.0" layoutY="34.0" onMouseClicked="#back" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../../../images/back.png" />
-         </image>
-         <cursor>
-            <Cursor fx:constant="HAND" />
-         </cursor>
-      </ImageView>
-      <Label alignment="CENTER_RIGHT" layoutY="647.0" prefHeight="33.0" prefWidth="600.0" text="\@3 chàng lính ngự lâm" textFill="#2fb16a" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="647.0">
-         <font>
-            <Font name="System Bold" size="18.0" />
-         </font>
-      </Label>
-      <TextArea fx:id="vietnameseField" layoutX="70.0" layoutY="316.0" prefColumnCount="15" prefHeight="222.0" prefRowCount="20" prefWidth="462.0" promptText="Nhập từ loại và nghĩa tương ứng (bắt buộc)" wrapText="true">
-         <font>
-            <Font name="Arial" size="22.0" />
-         </font>
-      </TextArea>
-      <TextField fx:id="pronunciationField" layoutX="173.0" layoutY="206.0" prefHeight="39.0" prefWidth="257.0" promptText="/ ... / (tùy chọn)">
-         <font>
-            <Font name="Arial" size="18.0" />
-         </font>
-      </TextField>
-      <Label alignment="CENTER" layoutX="25.0" layoutY="206.0" prefHeight="39.0" prefWidth="134.0" text="Phát âm:" textAlignment="CENTER" textFill="#2b7486">
-         <font>
-            <Font name="Calibri" size="22.0" />
-         </font>
-      </Label>
-   </children>
-</AnchorPane>
+
+<BorderPane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.trung.AddAWord">
+   <center>
+      <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="680.0" prefWidth="600.0">
+         <children>
+            <Label alignment="CENTER" layoutX="237.0" layoutY="6.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="106.0" prefWidth="600.0" style="-fx-background-color: #ab123456;" text="Thêm từ mới vào từ điển" textAlignment="CENTER" textFill="#2fb16a" AnchorPane.bottomAnchor="574.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <font>
+                  <Font name="System Bold" size="22.0" />
+               </font>
+            </Label>
+            <Label alignment="CENTER" layoutX="27.0" layoutY="138.0" prefHeight="39.0" prefWidth="134.0" text="Tiếng Anh:" textAlignment="CENTER" textFill="#2b7486" AnchorPane.leftAnchor="27.0" AnchorPane.rightAnchor="439.0">
+               <font>
+                  <Font name="Calibri" size="22.0" />
+               </font>
+            </Label>
+            <TextField fx:id="englishField" layoutX="172.0" layoutY="139.0" onKeyTyped="#setAlertLabelBlank" prefHeight="37.0" prefWidth="237.0" promptText="Nhập từ mới(bắt buộc)" AnchorPane.leftAnchor="172.0" AnchorPane.rightAnchor="191.0">
+               <font>
+                  <Font name="Arial" size="20.0" />
+               </font>
+            </TextField>
+            <Label alignment="CENTER" layoutX="-2.0" layoutY="275.0" prefHeight="30.0" prefWidth="192.0" text="Nghĩa(tiếng Việt):" textFill="#2b7486" AnchorPane.leftAnchor="-2.0" AnchorPane.rightAnchor="410.0">
+               <font>
+                  <Font name="Calibri" size="22.0" />
+               </font>
+            </Label>
+            <Button fx:id="addButton" layoutX="258.0" layoutY="546.0" mnemonicParsing="false" onAction="#addAWord" prefHeight="18.0" prefWidth="88.0" text="Thêm" AnchorPane.leftAnchor="258.0" AnchorPane.rightAnchor="254.0">
+               <font>
+                  <Font size="17.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <ImageView fx:id="backButton" fitHeight="40.0" fitWidth="40.0" layoutX="27.0" layoutY="34.0" onMouseClicked="#back" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../images/back.png" />
+               </image>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </ImageView>
+            <Label alignment="CENTER_RIGHT" layoutY="647.0" prefHeight="33.0" prefWidth="600.0" text="\@3 chàng lính ngự lâm" textFill="#2fb16a" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="647.0">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Label>
+            <TextArea fx:id="vietnameseField" layoutX="71.0" layoutY="316.0" onKeyTyped="#setAlertLabelBlank" prefColumnCount="15" prefHeight="223.0" prefRowCount="20" prefWidth="462.0" promptText="Nhập từ loại và nghĩa tương ứng (bắt buộc)" wrapText="true">
+               <font>
+                  <Font name="Arial" size="22.0" />
+               </font>
+            </TextArea>
+            <TextField fx:id="pronunciationField" layoutX="173.0" layoutY="206.0" prefHeight="39.0" prefWidth="257.0" promptText="/ ... / (tùy chọn)">
+               <font>
+                  <Font name="Arial" size="18.0" />
+               </font>
+            </TextField>
+            <Label alignment="CENTER" layoutX="25.0" layoutY="206.0" prefHeight="39.0" prefWidth="134.0" text="Phát âm:" textAlignment="CENTER" textFill="#2b7486">
+               <font>
+                  <Font name="Calibri" size="22.0" />
+               </font>
+            </Label>
+            <Label fx:id="alertLabel" alignment="CENTER" layoutX="181.0" layoutY="591.0" prefHeight="20.0" prefWidth="242.0" textFill="#e82929">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+   </center>
+</BorderPane>

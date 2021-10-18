@@ -1,21 +1,15 @@
 package com.example.trung;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.Optional;
 
 public class RemoveWord {
     private static String removedWord;
-
-    public static String getRemovedWord() {
-        return removedWord;
-    }
 
     @FXML
     Label instruction1;
@@ -53,8 +47,7 @@ public class RemoveWord {
             return;
         }
         removedWord = input;
-        Stage newStage = DictionaryApplication.addAScene("RemovalWarningBox");
-        newStage.show();
+        showAlert(removedWord);
     }
 
     @FXML
@@ -70,5 +63,31 @@ public class RemoveWord {
         else {
             wordMeaningField.setText("");
         }
+    }
+
+    private void showAlert(String word) throws IOException {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Xác nhận");
+        alert.setHeaderText("Hey what'suppp bro");
+        alert.setContentText("Bro muốn xóa từ \"" + word + "\" chứ?");
+
+        ButtonType yesButton = new ButtonType("Yep", ButtonBar.ButtonData.YES);
+        ButtonType noButton = new ButtonType("Thôi", ButtonBar.ButtonData.NO);
+        alert.getButtonTypes().setAll(yesButton, noButton);
+
+        Optional<ButtonType> buttonReceived = alert.showAndWait();
+
+        if (buttonReceived.equals(yesButton)) {
+            DictionaryManagement.removeWord(word);
+            LookUpHistory.removeWord(word);
+        }
+        if (buttonReceived.equals(noButton)) {
+            return;
+        }
+
+        Alert alert2 = new Alert(Alert.AlertType.INFORMATION);
+        alert2.setTitle("Thông báo");
+        alert2.setHeaderText("ok xoá xong rồi đó bờ rô");
+        alert2.show();
     }
 }

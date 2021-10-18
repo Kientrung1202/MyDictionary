@@ -8,13 +8,14 @@ import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.util.*;
 
-//import com.sun.speech.freetts.Voice;
-//import com.sun.speech.freetts.VoiceManager;
-
 public class DictionaryManagement {
     private static final String path = "src/main/resources/data/raw dictionary(en-vi).txt";
 
     private static Map<String, Word> wordList = new LinkedHashMap<>(104000);
+
+    public static void initialize() throws IOException {
+        wordListInitialize();
+    }
 
     private static void wordListInitialize() throws IOException { //read file to wordList
         BufferedReader reader = Files.newBufferedReader(FileSystems.getDefault().getPath(path));
@@ -38,10 +39,6 @@ public class DictionaryManagement {
         }
         reader.close();
         System.out.println(wordList.size());
-    }
-
-    public static void initialize() throws IOException {
-        wordListInitialize();
     }
 
     /**
@@ -146,14 +143,17 @@ public class DictionaryManagement {
      * @return list of ArrayList type.
      */
     public static ArrayList<String> getSuggestedWords(String text) {
+        final int SIZE_LIMIT = 30;
         text = text.toLowerCase(Locale.ROOT);
+
         LinkedHashSet<String> tempSet = new LinkedHashSet<>();
-        ArrayList<String> list = new ArrayList<>(); //return
-        final int SIZE_LIMIT = 15;
-        for (int index = 0, count = 0; index < text.length() && count != SIZE_LIMIT; index++) {
+        ArrayList<String> list = new ArrayList<>(); //return this arraylist
+
+        for (int index = 0, count = 0; (index < text.length() / 2) && (count != SIZE_LIMIT); index++) {
             //consider both lowercase word and capitalized word.
             String subText = text.substring(0, text.length() - index);
             String capSubText = getCapitalizedWord(subText);
+
             for(String word : wordList.keySet()) {
                 if (count == SIZE_LIMIT) {
                     list.addAll(tempSet);
@@ -161,7 +161,7 @@ public class DictionaryManagement {
                 }
                 if (word.startsWith(subText) || word.startsWith(capSubText)) {
                     count++;
-                    tempSet.add(word + " " + wordList.get(word).getPronunciation());
+                    tempSet.add(word);
                 }
             }
         }
@@ -169,7 +169,11 @@ public class DictionaryManagement {
         return list;
     }
 
-    //get from the first line that may contain pronunciation part.
+    /**
+     * Get pronunciation part from the first line of each word in text file(maybe contain or not).
+     * @param firstLine
+     * @return
+     */
     private static String getPronunciation(final String firstLine) {
         String[] arr = firstLine.split(" /");
         if (arr.length > 1) {
@@ -178,7 +182,11 @@ public class DictionaryManagement {
         return "";
     }
 
-    //only used for the line that contains main Word.
+    /**
+     * Only used for the line of each word in text file.
+     * @param firstLine
+     * @return
+     */
     private static String getWord(final String firstLine) {
         String[] arr = firstLine.split(" /");
         String result = arr[0];
@@ -208,6 +216,11 @@ public class DictionaryManagement {
         writer.close();
     }
 
+    /**
+     * For words those capitalized version exist in wordlist.
+     * @param word String
+     * @return
+     */
     private static String getCapitalizedWord(String word) {
         char tmp = word.charAt(0);
         if (tmp >= 'A' && tmp <= 'Z') return word;
@@ -244,24 +257,4 @@ public class DictionaryManagement {
         }
         return result.toString();
     }
-
-//    public static void speakVoiceEn(String text) {
-//        System.setProperty("freetts.voices", "com.sun.speech.freetts.en.us.cmu_us_kal.KevinVoiceDirectory");
-//        Voice voice = VoiceManager.getInstance().getVoice("kevin16");//Getting voice
-//        if (voice != null) {
-//            voice.allocate();//Allocating Voice
-//        }
-//        try {
-//            voice.setRate(150);//Setting the rate of the voice
-//            voice.setPitch(100);//Setting the Pitch of the voice
-//            voice.setVolume(5);//Setting the volume of the voice
-//            voice.speak(text);//Calling speak() method
-//
-//        }
-//        catch(Exception e)
-//        {
-//            e.printStackTrace();
-//        }
-//
-//    }
 }

@@ -1,4 +1,3 @@
-a b c
 if
 hickey
 synchronize
@@ -18,3 +17,8 @@ tribe
 audaciousness
 audacious
 flick
+gun dog
+ticklish
+gabble
+hibernation
+oophorectomy

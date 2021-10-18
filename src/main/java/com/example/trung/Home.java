@@ -27,12 +27,6 @@ public class Home {
     public ListView suggestedWordListView;
 
     @FXML
-    private ResourceBundle resources;
-
-    @FXML
-    private URL location;
-
-    @FXML
     private TextField lookupField;
 
     @FXML
@@ -55,6 +49,9 @@ public class Home {
 
     @FXML
     private Button wordRemovingButton;
+
+    @FXML
+    private Button informationButton;
 
     /**
      * Open translation page
@@ -107,10 +104,24 @@ public class Home {
     @FXML
     private void addSuggestedWords() {
         String text = lookupField.getText();
+        if (!text.isBlank()) {
+            alertLabel.setText("");
+        }
         List<String> suggestedWords = DictionaryManagement.getSuggestedWords(text);
         if (!suggestedWords.isEmpty()) {
-            showSuggestedListView();
             suggestedWordListView.getItems().clear();
+            showSuggestedListView();
+
+            //Set the size of suggestedWordListView.
+            final int CELL_SIZE = 25; //height of each cell
+            final int MAX_LISTVIEW_HEIGHT = 18;
+            if (suggestedWords.size() > MAX_LISTVIEW_HEIGHT) {
+                suggestedWordListView.setPrefHeight(MAX_LISTVIEW_HEIGHT * CELL_SIZE);
+            }
+            else {
+                suggestedWordListView.setPrefHeight(suggestedWords.size() * CELL_SIZE);
+            }
+
             suggestedWordListView.getItems().addAll(suggestedWords);
         } else {
             hideSuggestedListView();
@@ -162,6 +173,11 @@ public class Home {
     }
 
     @FXML
+    void openInformationPage() {
+//        DictionaryApplication.setRoot("");
+    }
+
+    @FXML
     void initialize() {
         assert lookupField != null : "fx:id=\"lookupField\" was not injected: check your FXML file 'Home.fxml'.";
         assert searchingButton != null : "fx:id=\"searchingButton\" was not injected: check your FXML file 'Home.fxml'.";
@@ -170,5 +186,6 @@ public class Home {
         assert searchHistoryButton != null : "fx:id=\"searchHistoryButton\" was not injected: check your FXML file 'Home.fxml'.";
         assert wordEditingButton != null : "fx:id=\"wordEditingButton\" was not injected: check your FXML file 'Home.fxml'.";
         assert wordRemovingButton != null : "fx:id=\"wordRemovingButton\" was not injected: check your FXML file 'Home.fxml'.";
+        assert informationButton != null : "fx:id=\"informationButton\" was not injected: check your FXML file 'Home.fxml'.";
     }
 }

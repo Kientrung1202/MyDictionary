@@ -8,6 +8,7 @@ module com.example.trung {
 //    requires org.json;
     requires java.net.http;
     requires freetts;
+    requires org.json;
 //    requires com.google.api.services.sourcerepo;
 
     opens com.example.trung to javafx.fxml;

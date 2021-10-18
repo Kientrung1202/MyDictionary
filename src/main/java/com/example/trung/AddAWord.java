@@ -2,25 +2,16 @@ package com.example.trung;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.stage.Stage;
+import javafx.scene.paint.Color;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class AddAWord {
-
-    @FXML
-    private ResourceBundle resources;
-
-    @FXML
-    private URL location;
-
     @FXML
     private TextField englishField;
 
@@ -31,18 +22,24 @@ public class AddAWord {
     private TextArea vietnameseField;
 
     @FXML
-    private ImageView back;
+    private ImageView backButton;
 
     @FXML
-    private Button add;
+    private Button addButton;
 
     @FXML
-    void addAWord(ActionEvent event) throws IOException {
+    private Label alertLabel;
+
+    @FXML
+    private void addAWord(ActionEvent event) throws IOException {
         String englishText = englishField.getText();
         String vietnamText = vietnameseField.getText();
         if (englishText.isBlank() || vietnamText.isBlank()) {
+            alertLabel.setTextFill(Color.RED);
+            alertLabel.setText("Từ hoặc nghĩa còn trống");
             return;
         }
+
         String pronunciation = pronunciationField.getText();
         Word newWord = new Word(englishText, pronunciation, vietnamText);
 
@@ -52,26 +49,38 @@ public class AddAWord {
             englishField.setText("");
             pronunciationField.setText("");
             vietnameseField.setText("");
-            Stage newStage = DictionaryApplication.addAScene("SucceededAdditionNoticeBox");
-            newStage.show();
+            showSuccessAlert(newWord.getEnglishText());
         } else {
-            Stage newStage = DictionaryApplication.addAScene("FailedAdditionNoticeBox");
-            newStage.show();
+            showFailureAlert(newWord.getEnglishText());
         }
     }
 
     @FXML
-    void back(MouseEvent event) throws IOException {
+    private void setAlertLabelBlank() {
+        alertLabel.setText("");
+    }
+
+    @FXML
+    private void back(MouseEvent event) throws IOException {
         DictionaryApplication.setRoot("Home");
     }
 
     @FXML
-    void clickOnPage() {
-        //Do nothing
+    private void initialize() {
+        assert addButton != null : "fx:id=\"addButton\" was not injected: check your FXML file 'AddAWord.fxml'.";
     }
 
-    @FXML
-    void initialize() {
-        assert add != null : "fx:id=\"add\" was not injected: check your FXML file 'AddAWord.fxml'.";
+    private void showSuccessAlert(String wordAdded) throws IOException {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Thông báo");
+        alert.setHeaderText("Okeyy đã thêm từ \"" + wordAdded + "\" thành công." );
+        alert.show();
+    }
+
+    private void showFailureAlert(String wordAdded) throws IOException {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Thông báo");
+        alert.setHeaderText("\"" + wordAdded + "\" đã tồn tại rồi, bro có thể dùng tính năng sửa từ nhé.");
+        alert.show();
     }
 }

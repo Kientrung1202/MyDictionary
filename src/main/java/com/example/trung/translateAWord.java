@@ -12,14 +12,10 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 public class translateAWord {
+    private VoiceManagement voiceManagement;
+
     @FXML
     public ListView suggestedWordListView;
-
-    @FXML
-    private ResourceBundle resources;
-
-    @FXML
-    private URL location;
 
     @FXML
     private TextArea vietnamText;
@@ -38,6 +34,9 @@ public class translateAWord {
 
     @FXML
     private Button search;
+
+    @FXML
+    private Button speakButton;
 
     @FXML
     void lookUpWord() throws IOException {
@@ -79,8 +78,19 @@ public class translateAWord {
         String text = input.getText();
         List<String> suggestedWords = DictionaryManagement.getSuggestedWords(text);
         if (!suggestedWords.isEmpty()) {
-            showSuggestedListView();
             suggestedWordListView.getItems().clear();
+            showSuggestedListView();
+
+            //Set the size of suggestedWordListView.
+            final int CELL_SIZE = 25; //height of each cell
+            final int MAX_LISTVIEW_HEIGHT = 18;
+            if (suggestedWords.size() > MAX_LISTVIEW_HEIGHT) {
+                suggestedWordListView.setPrefHeight(MAX_LISTVIEW_HEIGHT * CELL_SIZE);
+            }
+            else {
+                suggestedWordListView.setPrefHeight(suggestedWords.size() * CELL_SIZE);
+            }
+
             suggestedWordListView.getItems().addAll(suggestedWords);
         } else {
             hideSuggestedListView();
@@ -96,6 +106,12 @@ public class translateAWord {
     private void showSuggestedListView() {
         suggestedWordListView.setVisible(true);
 //        suggestedWordListView.setDisable(false);
+    }
+
+    @FXML
+    private void getVoice() {
+        String text = input.getText();
+        voiceManagement.speak(text);
     }
 
     private void setVietnamText(String viet) {
@@ -119,6 +135,7 @@ public class translateAWord {
         assert englishLabel != null : "fx:id=\"englishLabel\" was not injected: check your FXML file 'translateAWord.fxml'.";
         assert btnBack != null : "fx:id=\"btnBack\" was not injected: check your FXML file 'translateAWord.fxml'.";
         assert vietnamText != null : "fx:id=\"vietnamText\" was not injected: check your FXML file 'translateAWord.fxml'.";
+        voiceManagement = new VoiceManagement();
         input.setText(Home.getResult().getEnglishText());
         showWordContent(Home.getResult());
     }
