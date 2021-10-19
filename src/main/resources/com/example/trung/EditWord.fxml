@@ -3,6 +3,7 @@
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.effect.InnerShadow?>
@@ -13,34 +14,47 @@
 <?import javafx.scene.text.Font?>
 
 <BorderPane onMouseClicked="#clickOnPage" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.trung.EditWord">
-   <left>
+   <center>
       <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="680.0" prefWidth="600.0" BorderPane.alignment="CENTER">
          <children>
-            <Label alignment="CENTER" layoutX="237.0" layoutY="6.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="106.0" prefWidth="600.0" style="-fx-background-color: #ab123456;" text="Sửa từ đã có trong từ điển" textAlignment="CENTER" textFill="#a8397b" AnchorPane.bottomAnchor="574.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <TabPane prefHeight="680.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" />
+            <TextField fx:id="replacedWordField" layoutX="133.0" layoutY="142.0" onAction="#process" onKeyPressed="#processByPressEnter" onKeyReleased="#getContent" onKeyTyped="#checkReplacedWord" prefHeight="45.0" prefWidth="302.0" promptText="Nhập tại đây" AnchorPane.leftAnchor="133.0" AnchorPane.rightAnchor="165.0">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </TextField>
+            <TextField fx:id="replacingWordField" layoutX="134.0" layoutY="234.0" onAction="#process" onKeyPressed="#processByPressEnter" onKeyTyped="#checkReplacingWord" prefHeight="45.0" prefWidth="301.0" promptText="Nhập tại đây(tùy chọn)" AnchorPane.leftAnchor="134.0" AnchorPane.rightAnchor="165.0" AnchorPane.topAnchor="234.0">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </TextField>
+            <TextField fx:id="pronunciationField" layoutX="136.0" layoutY="322.0" prefHeight="36.0" prefWidth="209.0" />
+            <TextArea fx:id="meaningField" layoutX="137.0" layoutY="380.0" prefHeight="182.0" prefWidth="445.0" promptText="* từ loại\r- nghĩa" wrapText="true">
+               <font>
+                  <Font size="16.0" />
+               </font></TextArea>
+            <Label alignment="CENTER" layoutX="237.0" layoutY="6.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="95.0" prefWidth="600.0" style="-fx-background-color: #deb887;" text="Sửa từ đã có trong từ điển" textAlignment="CENTER" textFill="#a8397b" AnchorPane.bottomAnchor="585.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <font>
                   <Font name="System Bold" size="24.0" />
                </font>
+               <graphic>
+                  <ImageView fitHeight="49.0" fitWidth="47.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../images/edit_property_50px.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
             </Label>
             <Label alignment="CENTER" layoutX="48.0" layoutY="145.0" prefHeight="39.0" prefWidth="77.0" text="Từ gốc:" textAlignment="CENTER" textFill="#2b7486" AnchorPane.leftAnchor="48.0" AnchorPane.rightAnchor="475.0">
                <font>
                   <Font name="Arial" size="21.0" />
                </font>
             </Label>
-            <TextField fx:id="replacedWordField" layoutX="133.0" layoutY="142.0" onAction="#process" onKeyPressed="#processByPressEnter" onKeyReleased="#getContent" onKeyTyped="#checkReplacedWord" prefHeight="45.0" prefWidth="302.0" promptText="Nhập tại đây" AnchorPane.leftAnchor="133.0" AnchorPane.rightAnchor="165.0">
-               <font>
-                  <Font size="18.0" />
-               </font>
-            </TextField>
             <Label alignment="CENTER" layoutX="6.0" layoutY="238.0" prefHeight="38.0" prefWidth="124.0" text="Từ thay thế:" textFill="#2b7486" AnchorPane.leftAnchor="6.0" AnchorPane.rightAnchor="470.0">
                <font>
                   <Font name="Arial" size="21.0" />
                </font>
             </Label>
-            <TextField fx:id="replacingWordField" layoutX="134.0" layoutY="234.0" onAction="#process" onKeyPressed="#processByPressEnter" onKeyTyped="#checkReplacingWord" prefHeight="45.0" prefWidth="301.0" promptText="Nhập tại đây(tùy chọn)" AnchorPane.leftAnchor="134.0" AnchorPane.rightAnchor="165.0" AnchorPane.topAnchor="234.0">
-               <font>
-                  <Font size="18.0" />
-               </font>
-            </TextField>
             <Button fx:id="editButton" layoutX="273.0" layoutY="572.0" mnemonicParsing="false" onAction="#process" prefHeight="22.0" prefWidth="72.0" text="Sửa" textFill="#758013" textOverrun="WORD_ELLIPSIS" AnchorPane.bottomAnchor="73.0" AnchorPane.leftAnchor="273.0" AnchorPane.rightAnchor="255.0" AnchorPane.topAnchor="572.0">
                <font>
                   <Font name="Rockwell" size="19.0" />
@@ -52,14 +66,6 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Button>
-            <ImageView fx:id="back" fitHeight="40.0" fitWidth="40.0" layoutX="28.0" layoutY="34.0" onMouseClicked="#back" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../../images/back.png" />
-               </image>
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-            </ImageView>
             <Label alignment="CENTER_RIGHT" layoutX="399.0" layoutY="647.0" prefHeight="33.0" prefWidth="201.0" text="\@3 chàng lính ngự lâm" textFill="#2fb16a" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="399.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="647.0">
                <font>
                   <Font name="System Bold" size="18.0" />
@@ -80,10 +86,6 @@
                   <Font size="15.0" />
                </font>
             </Label>
-            <TextArea fx:id="meaningField" layoutX="137.0" layoutY="380.0" onKeyPressed="#processByPressEnter" prefHeight="182.0" prefWidth="445.0" promptText="* từ loại\r- nghĩa" wrapText="true">
-               <font>
-                  <Font size="16.0" />
-               </font></TextArea>
             <Label alignment="CENTER" layoutX="1.0" layoutY="380.0" prefHeight="38.0" prefWidth="134.0" text="Nghĩa của từ:" textFill="#2b7486">
                <font>
                   <Font name="Arial" size="21.0" />
@@ -94,8 +96,22 @@
                   <Font name="Arial" size="21.0" />
                </font>
             </Label>
-            <TextField fx:id="pronunciationField" layoutX="136.0" layoutY="322.0" prefHeight="36.0" prefWidth="209.0" />
+            <Button fx:id="backButton" layoutX="13.0" layoutY="23.0" mnemonicParsing="false" onAction="#back" prefHeight="50.0" prefWidth="40.0" style="-fx-background-radius: 80;">
+               <graphic>
+                  <ImageView fx:id="backImage" fitHeight="37.0" fitWidth="39.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../images/back2.png" />
+                     </image>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </ImageView>
+               </graphic>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
          </children>
       </AnchorPane>
-   </left>
+   </center>
 </BorderPane>

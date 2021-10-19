@@ -1,6 +1,5 @@
 package com.example.trung;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -30,6 +29,9 @@ public class EditWord {
     private Button editButton;
 
     @FXML
+    private Button backButton;
+
+    @FXML
     private Label warningForReplacedWord;
 
     @FXML
@@ -39,14 +41,14 @@ public class EditWord {
     private Label processResultLabel;
 
     @FXML
-    private ImageView backButton;
+    private ImageView backImage;
 
     @FXML
     void initialize() {
-        assert editButton != null : "fx:id=\"editButton\" was not injected: check your FXML file 'dichDoanVan.fxml'.";
-        assert warningForReplacedWord != null : "fx:id=\"warningForReplacedWord\" was not injected: check your FXML file 'dichDoanVan.fxml'.";
-        assert processResultLabel != null : "fx:id=\"processResultLabel\" was not injected: check your FXML file 'dichDoanVan.fxml'.";
-        assert backButton != null : "fx:id=\"backButton\" was not injected: check your FXML file 'dichDoanVan.fxml'.";
+        assert editButton != null : "fx:id=\"editButton\" was not injected: check your FXML file 'OpenTextTranslatingPage.fxml'.";
+        assert warningForReplacedWord != null : "fx:id=\"warningForReplacedWord\" was not injected: check your FXML file 'OpenTextTranslatingPage.fxml'.";
+        assert processResultLabel != null : "fx:id=\"processResultLabel\" was not injected: check your FXML file 'OpenTextTranslatingPage.fxml'.";
+        assert backButton != null : "fx:id=\"backButton\" was not injected: check your FXML file 'OpenTextTranslatingPage.fxml'.";
 
         meaningField.setPromptText("* từ loại \r- nghĩa");
     }
@@ -81,8 +83,12 @@ public class EditWord {
         }
     }
 
+    /**
+     * Main method of this class. It will run when clicking on Edit button.
+     * @throws IOException
+     */
     @FXML
-    private void process() throws IOException { //this method runs when clicking on Edit button.
+    private void process() throws IOException {
         String replacedWord = replacedWordField.getText();
         String newWord = replacingWordField.getText();
         if (replacedWord.isBlank()) {
@@ -94,7 +100,7 @@ public class EditWord {
         String meaning = meaningField.getText();
 
         Word tempReplacedWord = DictionaryManagement.lookUp(replacedWord);
-        Word tempnewWord = new Word(newWord, pronunciation, meaning);
+        Word tempNewWord = new Word(newWord, pronunciation, meaning);
 
         if (pronunciation.equals(tempReplacedWord.getPronunciation())
                 && meaning.equals(tempReplacedWord.getVietnamText())
@@ -104,10 +110,15 @@ public class EditWord {
             return;
         }
 
-        if(DictionaryManagement.editWord(tempReplacedWord, tempnewWord)) {
+        if(DictionaryManagement.editWord(tempReplacedWord, tempNewWord)) {
             processResultLabel.setTextFill(Color.GREEN);
             processResultLabel.setText("Sửa từ thành công!");
-            LookUpHistory.editWord(replacedWord, newWord);
+
+            //The word to replace old one is blank means that only content of the old word change.
+            if (!newWord.isBlank()) {
+                SearchHistory.editWord(replacedWord, newWord);
+            }
+
             replacedWordField.setText("");
             replacingWordField.setText("");
         }

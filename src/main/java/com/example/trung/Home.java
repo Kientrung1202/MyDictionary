@@ -3,14 +3,12 @@ package com.example.trung;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.BorderPane;
 
 import java.io.IOException;
-import java.net.URL;
 import java.util.List;
-import java.util.ResourceBundle;
 
 public class Home {
     private static Word result = new Word();
@@ -53,6 +51,9 @@ public class Home {
     @FXML
     private Button informationButton;
 
+    @FXML
+    private ImageView searchIcon;
+
     /**
      * Open translation page
      * @throws IOException
@@ -63,11 +64,11 @@ public class Home {
         if (!enteredWord.isBlank()) {
             result = DictionaryManagement.lookUp(enteredWord);
             if (result != null) {
-                LookUpHistory.addIntoList(result);
+                SearchHistory.addIntoList(result);
             } else {
                 result = new Word(enteredWord, "", "Không có từ này trong từ điển.");
             }
-            DictionaryApplication.setRoot("translateAWord");
+            DictionaryApplication.setRoot("LookupWord");
         }
         else {
             alertLabel.setText("Chưa nhập từ cần tìm.");
@@ -148,18 +149,18 @@ public class Home {
     }
 
     @FXML
-    void dichDoanVan(ActionEvent event) throws IOException {
-        DictionaryApplication.setRoot("dichDoanVan");
+    void OpenTextTranslatingPage(ActionEvent event) throws IOException {
+        DictionaryApplication.setRoot("TranslateText");
     }
 
     @FXML
     void openSearchHistoryPage() throws IOException {
-        DictionaryApplication.setRoot("LookUpHistory");
+        DictionaryApplication.setRoot("SearchHistory");
     }
 
     @FXML
     void openWordAddingPage() throws IOException {
-        DictionaryApplication.setRoot("AddAWord");
+        DictionaryApplication.setRoot("AddWord");
     }
 
     @FXML
@@ -173,8 +174,8 @@ public class Home {
     }
 
     @FXML
-    void openInformationPage() {
-//        DictionaryApplication.setRoot("");
+    void openInformationPage() throws IOException {
+        DictionaryApplication.setRoot("AboutPage");
     }
 
     @FXML

@@ -1,10 +1,26 @@
 package com.example.trung;
 
+import javafx.scene.control.CheckBox;
+
 public class Word {
     private String englishText = "";
     private String partsOfSpeech = "";
     private String pronunciation = "";
     private String vietnamText = "Khong co tu nay trong tu dien";
+    private CheckBox checkBox;
+
+    public CheckBox getCheckBox() {
+        return checkBox;
+    }
+
+    public void setCheckBox(CheckBox checkBox) {
+        this.checkBox = checkBox;
+    }
+
+    public void setSelected(boolean b) {
+        checkBox.setSelected(b);
+    }
+
     Word() { }
 
     Word(String englishText, String pronunciation, String vietnamText) {

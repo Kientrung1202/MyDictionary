@@ -2,8 +2,8 @@ package com.example.trung;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
-import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.util.Optional;
@@ -21,10 +21,16 @@ public class RemoveWord {
     Button removeButton;
 
     @FXML
+    Button backButton;
+
+    @FXML
     TextArea wordMeaningField;
 
     @FXML
     TextField wordField;
+
+    @FXML
+    private ImageView backImage;
 
     @FXML
     void initialize() {
@@ -77,11 +83,11 @@ public class RemoveWord {
 
         Optional<ButtonType> buttonReceived = alert.showAndWait();
 
-        if (buttonReceived.equals(yesButton)) {
+        if (buttonReceived.get().equals(yesButton)) {
             DictionaryManagement.removeWord(word);
-            LookUpHistory.removeWord(word);
+            SearchHistory.removeWord(word);
         }
-        if (buttonReceived.equals(noButton)) {
+        if (buttonReceived.get().getButtonData().equals(ButtonBar.ButtonData.NO)) {
             return;
         }
 

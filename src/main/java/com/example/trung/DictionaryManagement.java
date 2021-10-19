@@ -38,7 +38,6 @@ public class DictionaryManagement {
             }
         }
         reader.close();
-        System.out.println(wordList.size());
     }
 
     /**
@@ -71,7 +70,7 @@ public class DictionaryManagement {
      * @return true if adding successfully.
      * @throws IOException
      */
-    public static boolean addAWord(Word newWord) throws IOException {
+    public static boolean addWord(Word newWord) throws IOException {
         if (newWord.getEnglishText().isBlank()) {
             return false;
         }
@@ -84,7 +83,7 @@ public class DictionaryManagement {
             newWord.setPartsOfSpeech();
 
             wordList.put(engWord, new Word(engWord, pronunciation, meaning));
-            String wordToAppend = "@" + engWord + " " + pronunciation + "\n" + meaning;
+            String wordToAppend = "@" + engWord + " " + pronunciation + "\n" + meaning + "\n";
             Files.write(Paths.get(path), //append the word just added
                     wordToAppend.getBytes(),
                     StandardOpenOption.APPEND);
@@ -95,28 +94,36 @@ public class DictionaryManagement {
 
     /**
      * Edit/Replace specified word with another word.
-     * @param replacedWord
-     * @param newWord
+     * @param origin
+     * @param dest
      * @return true when the word is edited successfully
      * @throws IOException
      */
-    public static boolean editWord(Word replacedWord, Word newWord) throws IOException {
-        String replacedWordString = replacedWord.getEnglishText();
-        String newWordString = newWord.getEnglishText();
+    public static boolean editWord(Word origin, Word dest) throws IOException {
+        removeExtraSpaceForWord(origin);
+        removeExtraSpaceForWord(dest);
 
-        Word result = lookUp(replacedWordString);
-        if (result == null) {
-            return false;
-        }
-        if (replacedWordString.equals(newWordString)) {
+        //return false if the word is not found in dict
+        if (lookUp(origin.getEnglishText()) == null) {
             return false;
         }
 
-        String pronunciation = newWord.getPronunciation();
-        String meaning = newWord.getVietnamText();
+        if (origin.getEnglishText().equals(dest.getEnglishText())
+                && origin.getVietnamText().equals(dest.getVietnamText())
+                && origin.getPronunciation().equals(dest.getPronunciation())) {
+            return false;
+        }
 
-        wordList.remove(replacedWord);
-        wordList.put(newWordString, new Word(newWordString, pronunciation, meaning));
+        //The change is approved even if the word whose meaning or pronunciation(or both) is edited but itself.
+        if (dest.getEnglishText().isBlank()) {
+            dest.setEnglishText(origin.getEnglishText());
+        }
+        String engWord = dest.getEnglishText();
+        String pronunciation = dest.getPronunciation();
+        String meaning = dest.getVietnamText();
+
+        wordList.remove(origin.getEnglishText());
+        wordList.put(engWord, new Word(engWord, pronunciation, meaning));
 
         writeToFile();
         return true;
@@ -256,5 +263,12 @@ public class DictionaryManagement {
             }
         }
         return result.toString();
+    }
+
+    static void removeExtraSpaceForWord(Word word) {
+        word.setEnglishText(removeExtraSpaces(word.getEnglishText()));
+        word.setPronunciation(removeExtraSpaces(word.getPronunciation()));
+        word.setVietnamText(removeExtraSpaces(word.getVietnamText()));
+        word.setPartsOfSpeech();
     }
 }
