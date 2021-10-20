@@ -139,10 +139,10 @@ public class SearchHistory {
 
         if (mouseEvent.getClickCount() == 2) {
             Word selectedWord = tbview.getSelectionModel().getSelectedItem();
-            tbview.getSelectionModel().clearSelection();
             Home.setResult(selectedWord);
             DictionaryApplication.setRoot("LookupWord");
         }
+        tbview.getSelectionModel().clearSelection();
     }
 
     @FXML

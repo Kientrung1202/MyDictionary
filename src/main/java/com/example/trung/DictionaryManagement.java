@@ -25,12 +25,13 @@ public class DictionaryManagement {
             while (line.length() > 1 && (line.charAt(0) == '@' || line.charAt(1) == '@')) {
                 String word = getWord(line);
                 String pronunciation = getPronunciation(line);
-                String meaning = "";
+                StringBuilder meaning = new StringBuilder();
 
                 while ((line = reader.readLine()) != null && (line.length() > 1) && (line.charAt(0) != '@')) {
-                    meaning += line + "\n";
+                    if (line.equals("---------------")) break; // "-"x15 is an end sign of this text file.
+                    meaning.append(line).append("\n");
                 }
-                wordList.put(word, new Word(word, pronunciation, meaning));
+                wordList.put(word, new Word(word, pronunciation, meaning.toString()));
 
                 if (line == null) {
                     break;
